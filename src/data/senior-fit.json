@@ -1,0 +1,322 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-10-21",
+  "scope": "Cuisine-level inference only. Restaurant recipes, portion sizes, and preparation vary. This file is not medical advice and does not establish that any venue meets a dietary or texture requirement.",
+  "cuisines": {
+    "italian": {
+      "display": "Italian",
+      "texture": {
+        "why": "Pasta, risotto, and braised dishes are often soft; doneness and cooking method vary.",
+        "rationale": "Common Italian menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Sauces, cured meats, and cheese are common salt sources; ask for sauces on the side.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled fish, vegetables, and smaller pasta portions are often available.",
+          "rationale": "General menu patterns. Ask about portion size and added sugar."
+        },
+        "gluten-free": {
+          "why": "Some kitchens offer gluten-free pasta or risotto, but cross-contact is possible.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "japanese": {
+      "display": "Japanese",
+      "texture": {
+        "why": "Udon, chawanmushi, soft tofu, and steamed dishes are often soft.",
+        "rationale": "Common Japanese menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Soy sauce and broths can be high in salt; ask for sauce on the side.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Sashimi, grilled fish, and vegetables are often available.",
+          "rationale": "General menu patterns. Ask about rice portions and added sugar."
+        },
+        "gluten-free": {
+          "why": "Rice and sashimi are often gluten-free; soy sauce may contain wheat.",
+          "rationale": "General menu patterns. Confirm soy sauce and cross-contact controls."
+        }
+      }
+    },
+    "chinese": {
+      "display": "Chinese",
+      "texture": {
+        "why": "Congee, steamed dishes, and soft noodles are often available.",
+        "rationale": "Common Chinese menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Soy sauce, oyster sauce, and pickles are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Steamed vegetables and proteins are often available; ask about sugar in sauces.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Rice-based dishes are often available; soy sauce may contain wheat.",
+          "rationale": "General menu patterns. Confirm soy sauce and cross-contact controls."
+        }
+      }
+    },
+    "indian": {
+      "display": "Indian",
+      "texture": {
+        "why": "Dal, khichdi, and rice dishes are often soft.",
+        "rationale": "Common Indian menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Curries and pickles vary widely in salt; ask for less salt where possible.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Dal, vegetables, and grilled proteins are often available; watch rice and bread portions.",
+          "rationale": "General menu patterns. Ask about portion size and added sugar."
+        },
+        "gluten-free": {
+          "why": "Rice, dal, and many curries are often gluten-free; naan contains wheat.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "thai": {
+      "display": "Thai",
+      "texture": {
+        "why": "Curries, soft noodles, and steamed dishes are often available.",
+        "rationale": "Common Thai menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Fish sauce and curry pastes are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Stir-fried vegetables and grilled proteins are often available; ask about sugar in sauces.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Rice noodles and curries are often gluten-free; soy sauce may contain wheat.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "vietnamese": {
+      "display": "Vietnamese",
+      "texture": {
+        "why": "Pho, soft rice noodles, and steamed dishes are often available.",
+        "rationale": "Common Vietnamese menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Broth and fish sauce are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Broth-based dishes and vegetables are often available; ask about sugar in marinades.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Rice noodles and rice dishes are often gluten-free; soy sauce may contain wheat.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "mexican": {
+      "display": "Mexican",
+      "texture": {
+        "why": "Beans, rice, soft tortillas, and braised dishes are often available.",
+        "rationale": "Common Mexican menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Salsas, cheese, and cured meats are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Beans, grilled proteins, and vegetables are often available; watch tortilla and rice portions.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Corn tortillas and rice dishes are often available; cross-contact is possible.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "greek": {
+      "display": "Greek",
+      "texture": {
+        "why": "Grilled fish, dips, rice, and braised dishes are often soft.",
+        "rationale": "Common Greek menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Feta, olives, and cured meats are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled fish, salads, and vegetables are often available.",
+          "rationale": "General menu patterns. Ask about dressing and portion size."
+        },
+        "gluten-free": {
+          "why": "Grilled meats, fish, and salads are often available; pita contains wheat.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "mediterranean": {
+      "display": "Mediterranean",
+      "texture": {
+        "why": "Grilled fish, dips, rice, and braised dishes are often soft.",
+        "rationale": "Common Mediterranean menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Olives, feta, and cured meats are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled fish, vegetables, and legumes are often available.",
+          "rationale": "General menu patterns. Ask about portion size and added sugar."
+        },
+        "gluten-free": {
+          "why": "Grilled meats, fish, and rice are often available; pita contains wheat.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "american": {
+      "display": "American",
+      "texture": {
+        "why": "Mashed potatoes, soups, meatloaf, and soft-cooked vegetables are often available.",
+        "rationale": "Common diner and grill menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Many diner and grill dishes are high in salt; ask for sauces on the side.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled proteins and vegetables are often available; ask about sugar and portion size.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Options vary; ask about breading, sauces, and cross-contact.",
+          "rationale": "General menu patterns. Confirm preparation with the kitchen."
+        }
+      }
+    },
+    "french": {
+      "display": "French",
+      "texture": {
+        "why": "Omelets, soups, and braised dishes are often soft.",
+        "rationale": "Common French menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Butter, sauces, and cured meats are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled fish and vegetables are often available; ask about sugar in sauces.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Options vary; ask about flour in sauces and cross-contact.",
+          "rationale": "General menu patterns. Confirm preparation with the kitchen."
+        }
+      }
+    },
+    "korean": {
+      "display": "Korean",
+      "texture": {
+        "why": "Soft tofu stew, rice, and steamed dishes are often available.",
+        "rationale": "Common Korean menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Fermented foods and sauces are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled proteins and vegetables are often available; ask about sugar in marinades.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Rice and grilled dishes are often available; soy sauce may contain wheat.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "spanish": {
+      "display": "Spanish",
+      "texture": {
+        "why": "Tortilla, rice dishes, and braised dishes are often soft.",
+        "rationale": "Common Spanish menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Cured meats, olives, and salted dishes are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled seafood and vegetables are often available.",
+          "rationale": "General menu patterns. Ask about portion size and added sugar."
+        },
+        "gluten-free": {
+          "why": "Rice, seafood, and tortilla are often available; cross-contact is possible.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "middle_eastern": {
+      "display": "Middle Eastern",
+      "texture": {
+        "why": "Hummus, rice, stews, and soft-cooked vegetables are often available.",
+        "rationale": "Common Middle Eastern menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Pickles, olives, and seasoned meats are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled proteins, hummus, and vegetables are often available; watch rice and bread portions.",
+          "rationale": "General menu patterns. Recipes vary by kitchen."
+        },
+        "gluten-free": {
+          "why": "Rice, hummus, and grilled meats are often available; pita contains wheat.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    },
+    "seafood": {
+      "display": "Seafood",
+      "texture": {
+        "why": "Grilled or baked fish, chowder, and soft-cooked vegetables are often available.",
+        "rationale": "Common seafood menu patterns. Confirm preparation with the kitchen."
+      },
+      "sodium": {
+        "why": "Broths, breading, and sauces are common salt sources.",
+        "rationale": "General restaurant preparation patterns. Recipes vary by kitchen."
+      },
+      "diet": {
+        "diabetic-friendly": {
+          "why": "Grilled fish and vegetables are often available.",
+          "rationale": "General menu patterns. Ask about portion size and added sugar."
+        },
+        "gluten-free": {
+          "why": "Grilled fish is often gluten-free; breading and sauces may contain gluten.",
+          "rationale": "General menu patterns. Confirm preparation and cross-contact controls."
+        }
+      }
+    }
+  }
+}
