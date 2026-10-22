@@ -18,7 +18,7 @@ const envSchema = z.object({
   GEMINI_MODEL: z
     .string()
     .regex(/^[a-zA-Z0-9._/-]+$/, "Invalid Gemini model id")
-    .default("gemini-2.5-flash"),
+    .default("gemini-3.8-flash"),
   GEMINI_MAX_TOKENS: z.coerce.number().int().min(100).max(4000).default(900),
   UPSTASH_REDIS_REST_URL: optionalUrl,
   UPSTASH_REDIS_REST_TOKEN: optionalString,
