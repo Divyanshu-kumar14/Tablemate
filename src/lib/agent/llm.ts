@@ -127,24 +127,6 @@ function buildGeminiBody(system: string, userPayload: unknown, maxTokens: number
     generationConfig: {
       temperature: 0.2,
       maxOutputTokens: maxTokens,
-      responseMimeType: "application/json",
-      responseSchema: {
-        type: "OBJECT",
-        properties: {
-          picks: {
-            type: "ARRAY",
-            items: {
-              type: "OBJECT",
-              properties: {
-                id: { type: "STRING" },
-                taste_reason: { type: "STRING" },
-              },
-              required: ["id", "taste_reason"],
-            },
-          },
-        },
-        required: ["picks"],
-      },
     },
   };
 }
