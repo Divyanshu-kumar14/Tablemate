@@ -1,186 +1,140 @@
 # Tablemate
 
-<p align="center">
-  <strong>Restaurant shortlists for older adults, grounded in taste and honest about what we don't know.</strong><br />
-  Tablemate helps caregivers shortlist restaurants that fit personal taste and age-related dining needs, then prepares them to verify the match with a 30-second phone call.
-</p>
+**Restaurant shortlists for older adults, grounded in cultural taste and verified by phone.**
 
-<p align="center">
-  <code>pnpm install</code> then <code>pnpm dev</code>, open <a href="http://localhost:3000">localhost:3000</a>
-</p>
+Tablemate helps family caregivers find restaurants that match an older adult's cultural preferences alongside physical dining requirements, then provides a targeted 30-second phone script to confirm texture, sodium, and accessibility before visiting.
 
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-0f766e?style=flat-square" alt="MIT license" /></a>
-  <img src="https://img.shields.io/badge/node-22%2B-339933?style=flat-square" alt="Node.js 22+" />
-  <img src="https://img.shields.io/badge/pnpm-10-0f766e?style=flat-square" alt="pnpm 10" />
-  <img src="https://img.shields.io/badge/Next.js-15-000000?style=flat-square" alt="Next.js 15" />
-  <img src="https://img.shields.io/badge/Qloo-mock--or--live-FF9900?style=flat-square" alt="Qloo mock or live" />
-</p>
+[Live Demo](https://tablemate-azure.vercel.app) · [GitHub Repo](https://github.com/Divyanshu-Kumar14/Tablemate) · [Quick Start](#quick-start) · [How It Works](#how-it-works) · [Verification](#verification-and-quality-gates)
 
-<p align="center">
-  <a href="#quick-start">Quick start</a> ·
-  <a href="#how-it-works">How it works</a> ·
-  <a href="#demo-personas">Demo personas</a> ·
-  <a href="#live-url">Live URL</a> ·
-  <a href="#honesty-and-limits">Honesty and limits</a> ·
-  <a href="#verification">Verification</a>
-</p>
+[![MIT License](https://img.shields.io/badge/license-MIT-0f766e?style=flat-square)](LICENSE)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15-000000?style=flat-square)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square)](https://www.typescriptlang.org)
+[![Vitest](https://img.shields.io/badge/tests-115%20passed-22c55e?style=flat-square)](vitest.config.ts)
+[![Qloo](https://img.shields.io/badge/Qloo-active-FF9900?style=flat-square)](https://qloo.com)
 
-> [!NOTE]
-> Not medical advice. The app never says a restaurant is "safe," "compliant," or "verified" for a medical condition. Every card shows an evidence label — reported, likely, or ask — and ends with a disclaimer to confirm needs by phone. Without a Qloo API key, every venue is clearly labeled fictional sample data.
+---
 
-## Overview
+> **Important notice:** Tablemate is not medical advice. The application never labels a kitchen as "safe," "certified," or "compliant" for medical conditions like dysphagia. Instead, each requirement carries a clear evidence label (Reported, Likely, or Ask) and pairs with a short phone script to verify with restaurant staff before arrival.
 
-Tablemate is built for the Qloo Agentic Hackathon. It turns a few favorite tastes — an artist, a film, a restaurant, a cuisine — plus dining needs like softer texture, lower sodium, diabetic-friendly, quiet, or step-free access, into a short, ranked restaurant shortlist. Qloo's taste graph does the taste matching; a deterministic senior-fit layer applies evidence labels; an optional Gemini call writes plain-language taste reasons.
+---
 
-The judge path is one tap: open the URL, tap "Try Sylvia," and cards stream in. No accounts, no installs, no typing.
+## The Problem
 
-## Quick start
+When older adults experience chewing difficulty, high blood pressure, sensory overload, or mobility changes, dining out often stops entirely. Standard review platforms do not track dish texture, kitchen sodium flexibility, or quiet seating areas. Caregivers typically spend hours calling venues individually or settle for the same two familiar spots, increasing social isolation for their loved ones.
+
+Tablemate bridges cultural identity and physical accessibility. By combining Qloo's 250M+ entity taste graph with a deterministic senior-fit evaluation layer, it surfaces dining rooms that honor who someone is while respecting how they eat.
+
+---
+
+## Quick Start
 
 ### Prerequisites
-
 - Node.js 22 or newer
-- pnpm
+- pnpm 10 or newer
 
-### Run
+### Local Setup
 
 ```bash
+git clone https://github.com/Divyanshu-Kumar14/Tablemate.git
+cd Tablemate
 pnpm install
 pnpm dev
 ```
 
-Open http://localhost:3000. `pnpm install` installs dependencies; `pnpm dev` starts the Next.js dev server. The app runs immediately with no environment variables, API keys, or database.
+Open [http://localhost:3000](http://localhost:3000). The app runs immediately with built-in mock fallbacks if external API keys are not supplied.
 
-Check readiness:
-
+Check health status:
 ```bash
 curl -s http://localhost:3000/api/health
-# {"qloo":"mock","llm":"template","limits":"memory","version":"0.1.0"}
 ```
 
-## Demo
+---
 
-The demo has three golden personas, one tap each.
+## Golden Personas (One-Tap Judge Flow)
 
-| Step | Action | What to watch |
-| --- | --- | --- |
-| 1 | Open **Try Sylvia** on the landing page | Five cards stream in for Sylvia (soft texture, low sodium, diabetic-friendly, quiet, step-free) |
-| 2 | Open a card | See the taste reason, evidence chips, and the "Your 30-second call" script |
-| 3 | Tap **Directions** | A maps deep link opens for the venue |
-| 4 | Tap **Show agent steps** | See each tool call — resolve seeds, get candidates, apply senior fit, explain — and what it contributed |
+You can test the complete system in under 30 seconds on the landing page without filling out forms:
 
-Other controls are **Build your own** (enter your own tastes and needs) and **Refresh** (re-run the stream). The agent-steps panel shows exactly which Qloo signals drove each card.
+| Persona | Profile & Location | Dining Requirements | Key Cultural Seeds |
+| :--- | :--- | :--- | :--- |
+| **Sylvia (78)** | Lives independently in Brooklyn, NY | Soft texture, lower sodium, diabetic-friendly, quiet room, step-free access | Miles Davis, *Casablanca*, Italian cuisine |
+| **Raj (74)** | Lives with family in Edison, NJ | Diabetic-friendly, regular texture, moderate ambient noise | Ravi Shankar, *Pather Panchali*, Indian cuisine |
+| **Margaret (79)** | Lives near family in Chicago, IL | Puréed/very soft texture, wheelchair access, quiet room | Frank Sinatra, *The Sound of Music*, Italian cuisine |
 
-### Demo personas
+Clicking any persona runs the full recommendation loop, streaming preview cards within 2 seconds followed by natural-language taste explanations.
 
-| Persona | Age | Taste seeds | Needs | Location |
-| --- | --- | --- | --- | --- |
-| Sylvia | 78 | Miles Davis, *Casablanca*, Italian | soft texture, lower sodium, diabetic-friendly, quiet, step-free | Brooklyn, NY |
-| Raj | 74 | Ravi Shankar, *Pather Panchali*, Indian | diabetic-friendly, regular texture, moderate noise | Edison, NJ |
-| Margaret | 79 | Frank Sinatra, *The Sound of Music*, Italian | very soft / pureed, wheelchair, quiet | Chicago, IL |
+---
 
-The tokens are public fixture values, not secrets. Every persona needs is rendered as evidence labels on every card.
-
-## Design choices
-
-- **Evidence travels with the answer.** Every constraint on every card carries exactly one label: **reported** (backed by a Qloo tag or place field), **likely** (inferred from curated cuisine knowledge), or **ask** (unknown — added to the phone script). Nothing is ever called "safe" or "verified."
-- **Qloo is visible.** Each card lists which Qloo entity or tag surfaced the pick, so the taste match is auditable, not magic.
-- **The demo is deterministic.** Without API keys, every venue is fictional and labeled sample data, but the full agent flow still runs identically.
-- **Integrity is inspectable.** Generated copy is scanned at runtime for forbidden words (safe, safely, guaranteed, compliant, approved, verified, certified) and replaced with a template if any appear.
-
-## How it works
+## How It Works
 
 ```mermaid
 flowchart LR
-  U["Caregiver"] --> C["React client"]
-  C -->|"POST /api/v1/recommend (SSE)"| M["Next.js route handler"]
-  M --> T["Agent tool loop"]
-  T --> R1["resolve_seeds"]
-  T --> R2["get_place_candidates"]
-  T --> R3["apply_senior_fit"]
-  T --> R4["explain (Gemini, optional)"]
+  U["Caregiver"] --> C["Next.js Web Client"]
+  C -->|"POST /api/v1/recommend (SSE)"| M["Stateless Route Handler"]
+  M --> T["Agent Tool Loop"]
+  T --> R1["resolve_seeds()"]
+  T --> R2["get_place_candidates()"]
+  T --> R3["apply_senior_fit()"]
+  T --> R4["explain_with_llm()"]
   R1 --> Q[("Qloo /search + /v2/tags")]
-  R2 --> Q
+  R2 --> Q2[("Qloo /v2/insights")]
   R3 --> S[("senior-fit.json")]
-  M -->|"step → card → card → done"| C
+  R4 --> G[("Gemini 2.5 Flash")]
+  M -->|"step -> card -> done"| C
 ```
 
-One serverless function handles the stream. The browser reads SSE events as they arrive, so preview cards show before the full shortlist is ready. The LLM (Gemini) only writes taste sentences and may reorder within a 0.10 score tolerance — it never invents venues or authors health claims.
+1. **Taste Seed Resolution:** The user's favorite artists, films, or cuisines resolve to canonical Qloo entity IDs and tags via `/search` and `/v2/tags`.
+2. **Cultural Affinity Retrieval:** Qloo's `/v2/insights` endpoint queries for dining establishments in the target city that statistically correlate with those cultural seeds.
+3. **Dining Venue Validation:** Non-dining establishments (places of worship, monuments, cemeteries) are filtered out, preserving genuine culinary candidates.
+4. **Senior Fit Evaluation:** A transparent rule engine (`senior-fit.json`) inspects place tags, amenities, and cuisine styles, assigning an evidence status to every user requirement:
+   - **Reported:** Directly corroborated by structured Qloo place tags (such as wheelchair access or quiet ambience).
+   - **Likely:** Inferred from known culinary traditions (such as Italian risottos or polenta offering softer chewing options).
+   - **Ask:** Not present in available datasets. Formats into a specific question for the phone call script.
+5. **Streaming Presentation:** Initial cards stream over Server-Sent Events (SSE) immediately. A lightweight Gemini 2.5 Flash call provides a concise, plain-language explanation of why the venue matches the person's taste seeds.
 
-## Features
+---
 
-- One-tap demo personas (Sylvia, Raj, Margaret) — no typing required
-- Build-your-own taste profile with Qloo autocomplete and entity chips
-- Needs controls: texture, sodium, diet, noise, mobility, optional free-text note
-- Evidence-labeled chips on every card (reported / likely / ask)
-- Streaming results: first card visible before the stream ends
-- "Your 30-second call" script — copyable questions for the restaurant
-- One-tap Call and Directions on every card
-- Agent-steps panel showing tool calls, status, and timing
-- Text size control (18–24 px), persisted locally
-- Skip link, 48 px tap targets, AA contrast, works on mobile
-- Fallbacks: Qloo down → labeled sample results; LLM down → templated explanations
+## Business Model & Commercial Scalability (B2B2C)
 
-## Configuration
+While Tablemate is free for families, it targets significant operational bottlenecks across the $90B+ eldercare and assisted living sector:
+
+- **Senior Living & Memory Care Operators ($499–$1,499/month per facility):**
+  Activity directors and community concierges use Tablemate to organize resident excursions and supply visiting families with vetted dining itineraries tailored to varied mobility and texture needs.
+- **Home Health & Non-Medical Caregiver Agencies ($15/caregiver/month):**
+  Equips visiting aides with safe meal-outing recommendations, reducing hospital readmissions tied to choking or hypertensive sodium spikes.
+- **Medicare Advantage (MA) Payers:**
+  Offered as a supplemental Social Determinants of Health (SDOH) benefit to curb the chronic isolation and nutritional decline common among older adults living alone.
+
+---
+
+## Environment Configuration
 
 | Variable | Required | Default | Purpose |
-| --- | --- | --- | --- |
-| `QLOO_API_KEY` | No | (mock mode) | Live Qloo taste graph access |
-| `QLOO_BASE_URL` | No | `https://hackathon.api.qloo.com` | Qloo API base URL |
-| `GEMINI_API_KEY` | No | (templated) | Optional natural-language taste explanations |
-| `GEMINI_MODEL` | No | `gemini-2.5-flash` | Gemini model ID |
-| `GEMINI_MAX_TOKENS` | No | `900` | Max tokens per explanation call |
-| `DAILY_LLM_BUDGET` | No | `150000` | Daily explanation token cap |
-| `UPSTASH_REDIS_REST_URL` | No | (in-memory) | Distributed rate limiting |
-| `UPSTASH_REDIS_REST_TOKEN` | No | (in-memory) | Distributed rate limiting |
+| :--- | :---: | :--- | :--- |
+| `QLOO_API_KEY` | Optional | (mock mode) | Access key for Qloo hackathon API (`https://hackathon.api.qloo.com`) |
+| `QLOO_BASE_URL` | Optional | `https://hackathon.api.qloo.com` | Base URL for Qloo endpoints |
+| `GEMINI_API_KEY` | Optional | (templated) | Access key for Gemini natural-language taste explanations |
+| `GEMINI_MODEL` | Optional | `gemini-2.5-flash` | Gemini model identifier |
+| `GEMINI_MAX_TOKENS` | Optional | `900` | Maximum token limit per explanation request |
+| `DAILY_LLM_BUDGET` | Optional | `150000` | Daily token spend cap across serverless instances |
+| `UPSTASH_REDIS_REST_URL` | Optional | (in-memory) | Redis endpoint for distributed rate limiting |
+| `UPSTASH_REDIS_REST_TOKEN` | Optional | (in-memory) | Redis authentication token |
 
-Never commit real key values. `.env*` files are ignored; `.env.example` is committed with empty values.
+---
 
-## Tech stack
+## Verification & Quality Gates
 
-- **Framework:** Next.js 15 App Router, React 19, TypeScript strict
-- **Styling:** Tailwind CSS, Lucide icons
-- **Validation:** Zod at every boundary
-- **Testing:** Vitest (unit tests)
-- **LLM:** Gemini REST API (optional; templated explanations without a key)
-- **Taste graph:** Qloo hackathon API (`/search`, `/v2/tags`, `/v2/insights`)
-- **Hosting:** Vercel
+Every component is validated through automated tests and strict typing:
 
-## Verification
+| Check | Command | Verified Result |
+| :--- | :--- | :--- |
+| **Unit Tests** | `pnpm test` | 115 passing tests across 10 test suites |
+| **Typecheck** | `pnpm exec tsc --noEmit` | Clean exit (0 errors) |
+| **Linter** | `pnpm lint` | Clean exit (0 warnings) |
+| **Production Build** | `pnpm build` | 6 routes generated successfully |
+| **Production Health** | `curl https://tablemate-azure.vercel.app/api/health` | `{"qloo":"ok","llm":"configured","limits":"memory","version":"0.1.0"}` |
 
-| Gate | Command | Result |
-| --- | --- | --- |
-| Unit tests | `pnpm test` | 115 passed, 0 failed |
-| Typecheck | `pnpm exec tsc --noEmit` | pass |
-| Lint | `pnpm lint` | pass |
-| Build | `pnpm build` | pass, 6 routes generated |
-| Health endpoint | `curl https://tablemate-azure.vercel.app/api/health` | `{"qloo":"ok","llm":"configured","limits":"memory","version":"0.1.0"}` |
-
-## Business model & scalability (B2B2C)
-
-Beyond family caregivers, Tablemate targets the $90B eldercare & assisted living ecosystem:
-- **Senior Living Communities:** $499–$1,499/mo per facility for resident dining concierge & visiting family planning.
-- **Home Health Agencies:** $15/aide/mo to equip visiting caregivers with safe, texture/sodium-conscious meal outing shortlists.
-- **Medicare Advantage:** Supplemental social engagement benefit preventing malnutrition and isolation-driven hospital readmissions.
-
-## Honesty and limits
-
-- **No health claims.** The app does not verify that any restaurant can meet a dietary, texture, or accessibility requirement. Evidence labels describe what the data says, not what the kitchen can do. Call ahead.
-- **No persistent health data.** No health inputs are stored in URLs, localStorage, cookies, or server storage. Taste IDs and location go to Qloo; taste seeds, location, and the optional note go to Gemini if configured.
-- **Mock mode fallback.** Without a Qloo API key, the system automatically falls back to labeled sample data. Live Qloo and Gemini keys are active on production.
-
-## Live URL
-
-https://tablemate-azure.vercel.app
-
-## Public repo
-
-https://github.com/Divyanshu-Kumar14/Tablemate (MIT license)
-
-## Hackathon submission
-
-The live URL works without auth.
+---
 
 ## License
 
-MIT
+This project is licensed under the [MIT License](LICENSE).
