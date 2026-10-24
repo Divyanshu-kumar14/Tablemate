@@ -437,7 +437,7 @@ export function ResultsClient() {
           )}
 
           {orderedCards.map((card, index) => (
-            <RestaurantCard key={card.id} card={card} rank={index + 1} />
+            <RestaurantCard key={card.id} card={card} rank={index + 1} streaming={loading} />
           ))}
 
           {loading && orderedCards.length === 0 && <CardSkeletons />}

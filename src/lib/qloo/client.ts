@@ -1,4 +1,4 @@
-import { env, qlooBaseUrl } from "@/lib/env";
+ import { env, qlooBaseUrl } from "@/lib/env";
 import type { SearchResult } from "@/data/mock-catalog";
 import type { SeedType } from "@/types/domain";
 import {
@@ -173,6 +173,19 @@ export async function searchTags(query: string): Promise<RawTagResponse> {
   });
 }
 
+/**
+ * Restaurant / dining category tag URNs used to scope Qloo insights to
+ * actual dining venues.  Without these, the API may return nightlife,
+ * comedy clubs, or other "place" entities that lack a full kitchen.
+ */
+const DINING_CATEGORY_TAG_URNS = [
+  "urn:tag:category:place:restaurant",
+  "urn:tag:category:place:dining",
+  "urn:tag:category:place:cafe",
+  "urn:tag:category:place:bakery",
+  "urn:tag:category:place:deli",
+];
+
 export async function getPlaceInsights(input: {
   entityIds: string[];
   tagIds: string[];
@@ -182,6 +195,7 @@ export async function getPlaceInsights(input: {
   const params: Record<string, ParamValue> = {
     "filter.type": "urn:entity:place",
     "filter.location.query": input.location,
+    "filter.tags": DINING_CATEGORY_TAG_URNS,
     take: Math.min(50, Math.max(1, input.limit)),
     "feature.explainability": true,
     sort_by: "affinity",

@@ -87,6 +87,28 @@ const DINING_TAG_PATTERNS = [
   /winery/i,
 ];
 
+/**
+ * Pure nightlife / entertainment venues without full kitchens.
+ * If a venue matches these AND lacks a DINING_TAG_PATTERNS match,
+ * isDiningVenue() returns false.
+ */
+const NIGHTLIFE_TAG_PATTERNS = [
+  /\bnightclub\b/i,
+  /\bnight_club\b/i,
+  /\bnightlife\b/i,
+  /\bcomedy_club\b/i,
+  /\bcomedy club\b/i,
+  /\bkaraoke\b/i,
+  /\bhookah\b/i,
+  /\blounge\b/i,
+  /\bdance_club\b/i,
+  /\bstrip_club\b/i,
+  /\bdisco\b/i,
+  /\bbilliards\b/i,
+  /\bpool_hall\b/i,
+  /\bcasino\b/i,
+];
+
 const CIVIC_OR_ATTRACTION_TAG_PATTERNS = [
   /tourist_attraction/i,
   /sightseeing/i,
@@ -109,16 +131,24 @@ export function isDiningVenue(name: string, tags: TagRef[]): boolean {
     }
   }
 
+  // Helper: does the venue have at least one dining-related tag or name?
+  const hasDiningTag = tags.some((tag) =>
+    DINING_TAG_PATTERNS.some((pattern) => pattern.test(`${tag.id} ${tag.name}`)),
+  );
+  const hasDiningName = DINING_TAG_PATTERNS.some((pattern) => pattern.test(name));
+
+  // Strict nightlife filter: if any tag is nightclub/comedy/karaoke/hookah
+  // and there is no cuisine / restaurant tag, reject the venue.
+  const hasNightlifeTag = tags.some((tag) =>
+    NIGHTLIFE_TAG_PATTERNS.some((pattern) => pattern.test(`${tag.id} ${tag.name}`)),
+  );
+  if (hasNightlifeTag && !hasDiningTag && !hasDiningName) return false;
+
+  // Attraction / civic filter
   const hasAttractionTag = tags.some((tag) =>
     CIVIC_OR_ATTRACTION_TAG_PATTERNS.some((pattern) => pattern.test(`${tag.id} ${tag.name}`)),
   );
-  if (hasAttractionTag) {
-    const hasDiningTag = tags.some((tag) =>
-      DINING_TAG_PATTERNS.some((pattern) => pattern.test(`${tag.id} ${tag.name}`)),
-    );
-    const hasDiningName = DINING_TAG_PATTERNS.some((pattern) => pattern.test(name));
-    if (!hasDiningTag && !hasDiningName) return false;
-  }
+  if (hasAttractionTag && !hasDiningTag && !hasDiningName) return false;
 
   return true;
 }

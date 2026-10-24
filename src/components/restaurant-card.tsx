@@ -6,7 +6,16 @@ import type { WireCard } from "@/types/domain";
 import { EvidenceChip } from "@/components/evidence-chip";
 import { CopyButton } from "@/components/copy-button";
 
-export function RestaurantCard({ card, rank }: { card: WireCard; rank: number }) {
+export function RestaurantCard({
+  card,
+  rank,
+  streaming = false,
+}: {
+  card: WireCard;
+  rank: number;
+  /** True while the SSE stream is still active. */
+  streaming?: boolean;
+}) {
   const [open, setOpen] = useState(rank === 1);
   const isPreview = card.revision === 0;
   const hasFallback = card.signals.some((signal) => signal.source === "fallback");
@@ -17,6 +26,12 @@ export function RestaurantCard({ card, rank }: { card: WireCard; rank: number })
   const scriptText = card.before_you_go.map((question, index) => `${index + 1}. ${question}`).join("\n");
 
   const matchPercent = Math.min(99, Math.max(75, Math.round(card.score * 100)));
+
+  // Only show the "polishing notes…" placeholder when the card is a preview
+  // AND the stream is still in-flight.  Once the stream finishes (done fires
+  // or loading becomes false), the text cleanly resolves to the final
+  // attribution instead of remaining stuck.
+  const showPolishing = isPreview && streaming;
 
   return (
     <article
@@ -33,7 +48,7 @@ export function RestaurantCard({ card, rank }: { card: WireCard; rank: number })
               <span className="font-mono text-xs uppercase tracking-widest text-amber-400 font-bold">
                 {rank === 1 ? "Top Recommendation" : `Pick 0${rank}`}
               </span>
-              {isPreview && (
+              {showPolishing && (
                 <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-amber-300">
                   Preview Stream
                 </span>
@@ -70,7 +85,7 @@ export function RestaurantCard({ card, rank }: { card: WireCard; rank: number })
         <p className="mt-2.5 inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400">
           <Sparkles className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
           {hasFallback ? "Sample taste match" : "Cross-domain affinity grounded by Qloo"}
-          {isPreview && <span className="text-amber-400 animate-pulse">· polishing notes…</span>}
+          {showPolishing && <span className="text-amber-400 animate-pulse">· polishing notes…</span>}
         </p>
 
         {/* Evidence Chips */}
