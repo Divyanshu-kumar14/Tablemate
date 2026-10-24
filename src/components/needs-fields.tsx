@@ -25,10 +25,10 @@ function RadioCard<T extends string>({
   return (
     <label
       className={cn(
-        "flex min-h-[78px] cursor-pointer items-start gap-3 rounded-xl border p-4 transition",
+        "flex min-h-[76px] cursor-pointer items-start gap-3 rounded-xl border p-4 transition-all duration-200",
         checked
-          ? "border-teal bg-teal-light/45 ring-1 ring-teal"
-          : "border-line bg-white hover:border-teal/40",
+          ? "border-amber-400/60 bg-amber-500/10 shadow-[0_0_25px_rgba(245,158,11,0.12)] ring-1 ring-amber-400/30"
+          : "border-white/[0.08] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]",
       )}
     >
       <input
@@ -37,11 +37,13 @@ function RadioCard<T extends string>({
         value={value}
         checked={checked}
         onChange={() => onSelect(value)}
-        className="mt-1 h-5 w-5 shrink-0"
+        className="mt-1 h-4 w-4 shrink-0 accent-amber-400"
       />
       <span>
-        <span className="block text-[1.05rem] font-semibold leading-snug">{label}</span>
-        <span className="mt-1 block text-[0.9rem] leading-snug text-muted">{description}</span>
+        <span className={cn("block text-sm font-semibold leading-snug", checked ? "text-amber-300" : "text-zinc-100")}>
+          {label}
+        </span>
+        <span className="mt-1 block text-xs leading-relaxed text-zinc-400">{description}</span>
       </span>
     </label>
   );
@@ -61,21 +63,23 @@ function CheckCard({
   return (
     <label
       className={cn(
-        "flex min-h-[78px] cursor-pointer items-start gap-3 rounded-xl border p-4 transition",
+        "flex min-h-[76px] cursor-pointer items-start gap-3 rounded-xl border p-4 transition-all duration-200",
         checked
-          ? "border-teal bg-teal-light/45 ring-1 ring-teal"
-          : "border-line bg-white hover:border-teal/40",
+          ? "border-amber-400/60 bg-amber-500/10 shadow-[0_0_25px_rgba(245,158,11,0.12)] ring-1 ring-amber-400/30"
+          : "border-white/[0.08] bg-white/[0.02] hover:border-white/[0.18] hover:bg-white/[0.04]",
       )}
     >
       <input
         type="checkbox"
         checked={checked}
         onChange={onToggle}
-        className="mt-1 h-5 w-5 shrink-0"
+        className="mt-1 h-4 w-4 shrink-0 accent-amber-400"
       />
       <span>
-        <span className="block text-[1.05rem] font-semibold leading-snug">{label}</span>
-        <span className="mt-1 block text-[0.9rem] leading-snug text-muted">{description}</span>
+        <span className={cn("block text-sm font-semibold leading-snug", checked ? "text-amber-300" : "text-zinc-100")}>
+          {label}
+        </span>
+        <span className="mt-1 block text-xs leading-relaxed text-zinc-400">{description}</span>
       </span>
     </label>
   );
@@ -110,9 +114,10 @@ export function NeedsFields({
 }) {
   return (
     <div className="space-y-8">
+      {/* Texture */}
       <fieldset>
-        <legend className="label-lg">Texture</legend>
-        <p className="helper">How easy is it to chew and swallow?</p>
+        <legend className="label-lg">Food Texture</legend>
+        <p className="helper">How soft does food need to be?</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-3">
           <RadioCard
             name="texture"
@@ -120,7 +125,7 @@ export function NeedsFields({
             checked={texture === "regular"}
             onSelect={onTexture}
             label="Regular"
-            description="No texture change needed."
+            description="No chewing or swallowing restrictions."
           />
           <RadioCard
             name="texture"
@@ -128,86 +133,81 @@ export function NeedsFields({
             checked={texture === "soft"}
             onSelect={onTexture}
             label="Soft"
-            description="Can be cut with a fork; no tough cuts or hard crusts."
+            description="Easy to cut with a fork; tender meats, soft pasta."
           />
           <RadioCard
             name="texture"
             value="very-soft"
             checked={texture === "very-soft"}
             onSelect={onTexture}
-            label="Very soft / puréed"
-            description="Texture-modified food. We will always add a preparation question."
+            label="Very Soft / Puréed"
+            description="Smooth or puréed foods; calls for verification."
           />
         </div>
       </fieldset>
 
+      {/* Sodium */}
       <fieldset>
-        <legend className="label-lg">Sodium</legend>
-        <p className="helper">Restaurants can often put sauces and seasoning on the side.</p>
+        <legend className="label-lg">Sodium Intake</legend>
+        <p className="helper">Relevant for hypertension, kidney, or heart conditions.</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <RadioCard
             name="sodium"
             value="no-preference"
             checked={sodium === "no-preference"}
             onSelect={onSodium}
-            label="No preference"
-            description="Leave sodium out of the fit score."
+            label="No restriction"
+            description="Standard kitchen seasoning."
           />
           <RadioCard
             name="sodium"
             value="lower"
             checked={sodium === "lower"}
             onSelect={onSodium}
-            label="Lower sodium"
-            description="Prefer kitchens that can reduce salt or serve sauces separately."
+            label="Lower Sodium"
+            description="Look for kitchens that can prepare dishes with less added salt."
           />
         </div>
       </fieldset>
 
+      {/* Dietary */}
       <fieldset>
-        <legend className="label-lg">Diet</legend>
-        <p className="helper">Choose any that apply. We label cuisine-level inference as likely, never reported.</p>
+        <legend className="label-lg">Dietary Patterns</legend>
+        <p className="helper">Select any chronic dietary needs.</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-3">
           <CheckCard
             checked={diet.includes("diabetic-friendly")}
             onToggle={() => onDiet(toggle(diet, "diabetic-friendly"))}
             label="Diabetic-friendly"
-            description="Ask about added sugar and portion size."
+            description="Lower simple carbs, lean proteins."
           />
           <CheckCard
             checked={diet.includes("renal-friendly")}
             onToggle={() => onDiet(toggle(diet, "renal-friendly"))}
             label="Renal-friendly"
-            description="Ask for sodium, potassium, and phosphorus information."
+            description="Lower phosphorus and potassium options."
           />
           <CheckCard
             checked={diet.includes("gluten-free")}
             onToggle={() => onDiet(toggle(diet, "gluten-free"))}
             label="Gluten-free"
-            description="Ask about preparation and cross-contact."
+            description="Options prepared without wheat or gluten."
           />
         </div>
       </fieldset>
 
+      {/* Noise / Ambiance */}
       <fieldset>
-        <legend className="label-lg">Noise</legend>
-        <p className="helper">Hearing aids and conversation change what a good room feels like.</p>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <RadioCard
-            name="noise"
-            value="none"
-            checked={noise === "none"}
-            onSelect={onNoise}
-            label="No preference"
-            description="Leave noise out of the fit score."
-          />
+        <legend className="label-lg">Noise & Acoustics</legend>
+        <p className="helper">Critical for hearing aids and comfortable conversation.</p>
+        <div className="mt-3 grid gap-3 sm:grid-cols-3">
           <RadioCard
             name="noise"
             value="quiet"
             checked={noise === "quiet"}
             onSelect={onNoise}
-            label="Quiet"
-            description="Prefer a calm room or a quieter table."
+            label="Quiet & Calm"
+            description="Soft acoustics, minimal background music."
           />
           <RadioCard
             name="noise"
@@ -215,71 +215,59 @@ export function NeedsFields({
             checked={noise === "moderate"}
             onSelect={onNoise}
             label="Moderate"
-            description="Some life in the room is fine."
+            description="Conversational atmosphere."
           />
           <RadioCard
             name="noise"
-            value="lively"
-            checked={noise === "lively"}
+            value="none"
+            checked={noise === "none"}
             onSelect={onNoise}
-            label="Lively"
-            description="Prefer a busy, animated room."
+            label="No preference"
+            description="Any ambient sound level."
           />
         </div>
       </fieldset>
 
+      {/* Mobility & Accessibility */}
       <fieldset>
-        <legend className="label-lg">Access and mobility</legend>
-        <p className="helper">We only mark this reported when a venue tag states it. Otherwise it is an ask.</p>
+        <legend className="label-lg">Physical Accessibility</legend>
+        <p className="helper">Entrance and seating logistics.</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <CheckCard
             checked={mobility.includes("step-free")}
             onToggle={() => onMobility(toggle(mobility, "step-free"))}
-            label="Step-free entrance"
-            description="No stairs at the entrance."
+            label="Step-free Entrance"
+            description="No stairs or steps at the main entrance."
           />
           <CheckCard
             checked={mobility.includes("wheelchair")}
             onToggle={() => onMobility(toggle(mobility, "wheelchair"))}
-            label="Wheelchair access"
-            description="Entrance and restroom access."
-          />
-          <CheckCard
-            checked={mobility.includes("hearing-friendly")}
-            onToggle={() => onMobility(toggle(mobility, "hearing-friendly"))}
-            label="Hearing-friendly"
-            description="A quieter table or hearing support."
-          />
-          <CheckCard
-            checked={mobility.includes("low-vision-friendly")}
-            onToggle={() => onMobility(toggle(mobility, "low-vision-friendly"))}
-            label="Low-vision friendly"
-            description="Large print or read-aloud options."
+            label="Wheelchair Accessible"
+            description="Accessible entrance and restroom clearance."
           />
         </div>
       </fieldset>
 
+      {/* Free-text note */}
       <div>
-        <label htmlFor="note" className="label-lg">
-          Anything else about their taste?
+        <label htmlFor="plan-note" className="label-lg">
+          Optional Family Note
         </label>
-        <p id="note-help" className="helper">
-          Taste only, please — no medical details. This note may be sent to the explanation
-          model. Max 200 characters.
+        <p className="helper">
+          Soft preferences only (e.g. &ldquo;Dad dislikes spicy food&rdquo;). Avoid confidential medical information.
         </p>
         <textarea
-          id="note"
+          id="plan-note"
           value={note}
-          onChange={(event) => onNote(event.target.value.slice(0, 200))}
+          onChange={(e) => onNote(e.target.value)}
           rows={3}
           maxLength={200}
-          aria-describedby="note-help note-count"
-          placeholder="Example: Dad hates spicy food and loves a quiet corner."
-          className="field mt-2 min-h-[110px] py-3"
+          placeholder="e.g. Loves a booth by the window, prefers mild flavors..."
+          className="field mt-2.5 h-auto py-3 text-sm"
         />
-        <p id="note-count" className="helper text-right">
-          {note.length}/200
-        </p>
+        <div className="mt-1.5 flex justify-end">
+          <span className="font-mono text-[11px] text-zinc-500">{note.length}/200</span>
+        </div>
       </div>
     </div>
   );

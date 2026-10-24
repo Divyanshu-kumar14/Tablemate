@@ -5,34 +5,56 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#FBF7F0",
-        paper: "#FFFDF8",
-        ink: "#1E1B16",
-        muted: "#5B554B",
-        line: "#DDD3C4",
-        teal: {
-          DEFAULT: "#0F5B55",
-          dark: "#0A3F3B",
-          light: "#DCEEEA",
+        obsidian: {
+          DEFAULT: "#070709",
+          950: "#070709",
+          900: "#0c0c10",
+          850: "#121217",
+          800: "#1a1a22",
         },
-        amber: {
-          DEFAULT: "#B45309",
-          light: "#FCEBD5",
+        gold: {
+          DEFAULT: "#d97706",
+          light: "#fbbf24",
+          champagne: "#fef3c7",
+          dark: "#b45309",
         },
-        reported: "#166534",
-        likely: "#92400E",
-        ask: "#475569",
+        ink: "#f4f4f6",
+        muted: "#9494a0",
+        line: "rgba(255, 255, 255, 0.08)",
+        reported: "#10b981",
+        likely: "#f59e0b",
+        ask: "#94a3b8",
       },
       fontFamily: {
         display: ['"Iowan Old Style"', '"Palatino Linotype"', "Palatino", "Georgia", "serif"],
         sans: ['"Avenir Next"', "Avenir", "Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       boxShadow: {
-        card: "0 1px 2px rgba(30,27,22,0.06), 0 8px 24px rgba(30,27,22,0.08)",
-        lift: "0 2px 4px rgba(30,27,22,0.08), 0 16px 40px rgba(30,27,22,0.12)",
+        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.45)",
+        "glass-glow": "0 0 35px -5px rgba(245, 158, 11, 0.15), 0 8px 32px 0 rgba(0, 0, 0, 0.5)",
+        "amber-glow": "0 0 25px -3px rgba(245, 158, 11, 0.3)",
       },
       borderRadius: {
         xl2: "1.25rem",
+        xl3: "1.75rem",
+      },
+      keyframes: {
+        "pulse-slow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
+        beam: {
+          "0%": { strokeDashoffset: "100" },
+          "100%": { strokeDashoffset: "0" },
+        },
+      },
+      animation: {
+        "pulse-slow": "pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        shimmer: "shimmer 8s linear infinite",
       },
     },
   },

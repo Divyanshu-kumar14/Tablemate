@@ -6,15 +6,17 @@ export function Disclaimer({ compact = false }: { compact?: boolean }) {
     <div
       role="note"
       className={cn(
-        "flex gap-3 rounded-xl border border-amber/30 bg-amber-light/60 p-4 text-ink",
-        compact ? "text-[0.9rem]" : "text-[1rem]",
+        "liquid-glass flex items-start gap-3 rounded-xl border border-amber-500/20 bg-gradient-to-r from-amber-500/10 via-obsidian-900 to-obsidian-950 p-4 text-zinc-300 backdrop-blur-md",
+        compact ? "text-xs" : "text-sm",
       )}
     >
-      <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber" aria-hidden="true" />
+      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-amber-400">
+        <Info className="h-3.5 w-3.5" aria-hidden="true" />
+      </div>
       <p className="leading-relaxed">
-        <strong className="font-semibold">A starting shortlist, not medical advice.</strong>{" "}
-        We label the evidence we have. We do not verify safety or current kitchen practice.
-        Call ahead before you go.
+        <strong className="font-semibold text-amber-300">A starting shortlist, not medical advice.</strong>{" "}
+        We label the evidence we have and do not verify current kitchen practice or allergy protocols.
+        Confirm texture, sodium, and accessibility by phone before visiting.
       </p>
     </div>
   );

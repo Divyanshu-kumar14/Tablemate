@@ -3,20 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --cream: #fbf7f0;
-  --paper: #fffdf8;
-  --ink: #1e1b16;
-  --muted: #5b554b;
-  --line: #ddd3c4;
-  --teal: #0f5b55;
-  --teal-dark: #0a3f3b;
-  --teal-light: #dceeea;
-  --amber: #b45309;
-  --amber-light: #fcebd5;
-  --reported: #166534;
-  --likely: #92400e;
-  --ask: #475569;
-  --focus: #0f5b55;
+  --obsidian: #070709;
+  --surface: #0e0e13;
+  --surface-glass: rgba(18, 18, 24, 0.72);
+  --ink: #f4f4f6;
+  --muted: #9494a0;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --amber: #f59e0b;
+  --amber-light: #fbbf24;
+  --reported: #10b981;
+  --likely: #f59e0b;
+  --ask: #94a3b8;
+  --focus: #f59e0b;
   --font-fraunces: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --font-source-sans: "Avenir Next", Avenir, Inter, system-ui, -apple-system, sans-serif;
 }
@@ -24,14 +23,16 @@
 html {
   font-size: 20px;
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
   min-height: 100vh;
-  background-color: var(--cream);
+  background-color: var(--obsidian);
   background-image:
-    radial-gradient(1100px 560px at 88% -8%, rgba(15, 91, 85, 0.075), transparent 62%),
-    radial-gradient(860px 520px at -8% 18%, rgba(180, 83, 9, 0.06), transparent 60%);
+    radial-gradient(1200px 600px at 50% -10%, rgba(245, 158, 11, 0.08), transparent 70%),
+    radial-gradient(900px 500px at 85% 15%, rgba(217, 119, 6, 0.04), transparent 60%),
+    radial-gradient(900px 500px at 15% 45%, rgba(245, 158, 11, 0.03), transparent 65%);
   background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-source-sans);
@@ -58,14 +59,14 @@ p {
 }
 
 ::selection {
-  background: var(--teal-light);
-  color: var(--teal-dark);
+  background: rgba(245, 158, 11, 0.25);
+  color: #fff;
 }
 
 *:focus-visible {
-  outline: 3px solid var(--focus);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 details > summary {
@@ -79,7 +80,7 @@ details > summary::-webkit-details-marker {
 
 input[type="radio"],
 input[type="checkbox"] {
-  accent-color: var(--teal);
+  accent-color: var(--amber);
 }
 
 .skip-link {
@@ -89,8 +90,8 @@ input[type="checkbox"] {
   z-index: 100;
   transform: translateY(-220%);
   border-radius: 0.6rem;
-  background: var(--teal);
-  color: white;
+  background: var(--amber);
+  color: #070709;
   padding: 0.8rem 1.1rem;
   font-weight: 700;
   text-decoration: none;
@@ -107,38 +108,46 @@ input[type="checkbox"] {
   }
 
   .eyebrow {
-    @apply font-semibold uppercase text-teal;
-    font-size: 0.8rem;
-    letter-spacing: 0.18em;
+    @apply font-mono text-xs uppercase tracking-widest text-amber-400/90;
     line-height: 1.4;
   }
 
+  /* KokonutUI Liquid Glass Container */
+  .liquid-glass {
+    @apply relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl shadow-glass transition-all duration-300;
+  }
+
+  .liquid-glass:hover {
+    @apply border-white/[0.16] shadow-glass-glow;
+  }
+
+  .liquid-glass-specular {
+    @apply relative before:absolute before:inset-x-0 before:top-0 before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-white/25 before:to-transparent;
+  }
+
+  /* Card styling with subtle gradient depth */
   .card-paper {
-    @apply rounded-xl2 border border-line bg-paper shadow-card;
+    @apply relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015] backdrop-blur-xl shadow-glass transition-all duration-300 hover:border-amber-400/30;
   }
 
   .btn-primary {
-    @apply inline-flex min-h-[56px] items-center justify-center gap-2 rounded-xl bg-teal px-6 py-3 text-lg font-semibold text-white transition;
+    @apply inline-flex min-h-[54px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3 text-lg font-semibold text-zinc-950 shadow-amber-glow transition-all duration-200 active:scale-[0.98];
     text-decoration: none;
   }
 
   .btn-primary:hover {
-    @apply bg-teal-dark;
+    @apply from-amber-400 to-amber-500 shadow-[0_0_30px_0_rgba(245,158,11,0.45)];
     transform: translateY(-1px);
   }
 
   .btn-primary:disabled {
-    @apply cursor-not-allowed opacity-50;
+    @apply cursor-not-allowed opacity-50 shadow-none;
     transform: none;
   }
 
   .btn-secondary {
-    @apply inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl border border-line bg-paper px-5 py-2.5 text-lg font-semibold text-ink transition;
+    @apply inline-flex min-h-[50px] items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-5 py-2.5 text-lg font-semibold text-zinc-100 backdrop-blur-md transition-all duration-200 hover:border-white/[0.25] hover:bg-white/[0.08] active:scale-[0.98];
     text-decoration: none;
-  }
-
-  .btn-secondary:hover {
-    @apply border-teal/50 bg-teal-light/40;
   }
 
   .btn-secondary:disabled {
@@ -146,35 +155,35 @@ input[type="checkbox"] {
   }
 
   .field {
-    @apply min-h-[56px] w-full rounded-xl border border-line bg-white px-4 text-lg text-ink transition placeholder:text-muted;
-  }
-
-  .field:focus {
-    @apply border-teal outline-none ring-2 ring-teal/20;
+    @apply min-h-[54px] w-full rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 text-lg text-zinc-100 placeholder-zinc-500 backdrop-blur-md transition-all duration-200 focus:border-amber-400/60 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-amber-400/20;
   }
 
   .label-lg {
-    @apply block text-lg font-semibold text-ink;
+    @apply block text-lg font-medium text-zinc-200;
   }
 
   .helper {
-    @apply mt-1 text-muted;
+    @apply mt-1 text-zinc-400;
     font-size: 0.9rem;
     line-height: 1.5;
   }
 
   .chip {
-    @apply inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 font-medium text-muted;
+    @apply inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 font-medium text-zinc-300 backdrop-blur-sm transition-all;
     font-size: 0.9rem;
     line-height: 1.4;
   }
 
+  .chip:hover {
+    @apply border-white/[0.18] bg-white/[0.08] text-zinc-100;
+  }
+
   .prose-link {
-    @apply font-semibold text-teal underline decoration-teal/30 decoration-2 underline-offset-4 transition;
+    @apply font-semibold text-amber-400 underline decoration-amber-400/30 decoration-2 underline-offset-4 transition;
   }
 
   .prose-link:hover {
-    @apply decoration-teal;
+    @apply decoration-amber-300 text-amber-300;
   }
 }
 

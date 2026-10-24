@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { AlertTriangle, ArrowLeft, Info, RefreshCw } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Info, RefreshCw, Sparkles, SlidersHorizontal } from "lucide-react";
 import type { RecommendRequest } from "@/lib/schemas";
 import type { WireCard } from "@/types/domain";
 import type { AgentDone, AgentStep } from "@/types/agent-ui";
@@ -19,15 +19,14 @@ function CardSkeletons() {
   return (
     <div className="space-y-6" aria-hidden="true">
       {[0, 1].map((index) => (
-        <div key={index} className="card-paper p-6 sm:p-8">
-          <div className="h-4 w-24 rounded skeleton" />
-          <div className="mt-3 h-10 w-2/3 rounded skeleton" />
-          <div className="mt-2 h-4 w-40 rounded skeleton" />
-          <div className="mt-6 h-16 w-full rounded-xl skeleton" />
-          <div className="mt-4 flex flex-wrap gap-2">
-            <div className="h-8 w-36 rounded-full skeleton" />
-            <div className="h-8 w-32 rounded-full skeleton" />
-            <div className="h-8 w-28 rounded-full skeleton" />
+        <div key={index} className="liquid-glass p-6 sm:p-8 animate-pulse space-y-4">
+          <div className="h-4 w-28 rounded bg-white/[0.08]" />
+          <div className="h-8 w-2/3 rounded bg-white/[0.08]" />
+          <div className="h-4 w-40 rounded bg-white/[0.06]" />
+          <div className="h-16 w-full rounded-xl bg-white/[0.04]" />
+          <div className="flex flex-wrap gap-2 pt-2">
+            <div className="h-7 w-32 rounded-full bg-white/[0.06]" />
+            <div className="h-7 w-28 rounded-full bg-white/[0.06]" />
           </div>
         </div>
       ))}
@@ -45,20 +44,20 @@ function ErrorBanner({
   loading: boolean;
 }) {
   return (
-    <div role="alert" className="rounded-xl border border-amber/40 bg-amber-light/60 p-5">
+    <div role="alert" className="liquid-glass border-amber-500/30 bg-amber-950/40 p-5 text-amber-200">
       <div className="flex gap-3">
-        <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber" aria-hidden="true" />
+        <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" aria-hidden="true" />
         <div>
-          <p className="text-[1.05rem] font-semibold">We hit a snag.</p>
-          <p className="mt-1 text-[0.95rem] leading-relaxed text-muted">{message}</p>
+          <p className="text-sm font-semibold text-amber-300">Shortlist Stream Interrupted</p>
+          <p className="mt-1 text-xs leading-relaxed text-zinc-300">{message}</p>
           <button
             type="button"
             onClick={onRetry}
             disabled={loading}
-            className="btn-secondary mt-3 !min-h-[48px] !px-4 !text-[0.95rem]"
+            className="btn-secondary mt-3 !min-h-[40px] !px-3.5 !text-xs font-semibold"
           >
-            <RefreshCw className="h-4 w-4" aria-hidden="true" />
-            Try again
+            <RefreshCw className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
+            Retry Stream
           </button>
         </div>
       </div>
@@ -67,38 +66,36 @@ function ErrorBanner({
 }
 
 function TrustPanel() {
-  const dots: Record<string, string> = {
-    reported: "bg-[#16A34A]",
-    likely: "bg-[#D97706]",
-    ask: "bg-[#64748B]",
-  };
-
   return (
-    <div className="card-paper mt-4 p-5">
-      <h2 className="text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-teal">
-        How to read a card
-      </h2>
+    <div className="liquid-glass liquid-glass-specular mt-4 p-5 text-xs">
+      <h2 className="eyebrow">Evidence Label Guide</h2>
       <ul className="mt-3 space-y-3">
         {(["reported", "likely", "ask"] as const).map((label) => (
           <li key={label} className="flex gap-2.5">
             <span
-              className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${dots[label]}`}
+              className={`mt-1 h-2 w-2 shrink-0 rounded-full ${
+                label === "reported"
+                  ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"
+                  : label === "likely"
+                    ? "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]"
+                    : "bg-slate-400"
+              }`}
               aria-hidden="true"
             />
             <div>
-              <p className="text-[0.95rem] font-semibold leading-snug">
+              <p className="font-semibold text-zinc-200">
                 {EVIDENCE_COPY[label].label}{" "}
-                <span className="font-normal text-muted">— {EVIDENCE_COPY[label].short}</span>
+                <span className="font-normal text-zinc-500">· {EVIDENCE_COPY[label].short}</span>
               </p>
-              <p className="mt-0.5 text-[0.85rem] leading-snug text-muted">
+              <p className="mt-0.5 text-[11px] text-zinc-400 leading-relaxed">
                 {EVIDENCE_COPY[label].description}
               </p>
             </div>
           </li>
         ))}
       </ul>
-      <p className="mt-4 border-t border-line/70 pt-3 text-[0.9rem] leading-relaxed text-muted">
-        Labels describe evidence, not the kitchen. Confirm every need by phone.
+      <p className="mt-3.5 border-t border-white/[0.08] pt-3 text-[11px] text-zinc-500">
+        Labels describe observable evidence, not safety guarantees. Confirm critical requirements by phone.
       </p>
     </div>
   );
@@ -106,25 +103,22 @@ function TrustPanel() {
 
 function NoRequest() {
   return (
-    <section className="container-page py-16 sm:py-24">
-      <div className="max-w-xl">
-        <p className="eyebrow">Nothing here yet</p>
-        <h1 className="mt-3 font-display text-[2.7rem] font-semibold leading-tight">
-          Build a shortlist first.
+    <section className="container-page py-16 sm:py-24 text-center">
+      <div className="liquid-glass liquid-glass-specular mx-auto max-w-xl p-8 sm:p-12">
+        <p className="eyebrow">Empty Profile</p>
+        <h1 className="mt-3 font-display text-3xl font-bold text-zinc-100">
+          Build a shortlist to get started.
         </h1>
-        <p className="mt-3 text-[1.05rem] leading-relaxed text-muted">
-          Pick a persona for the one-tap demo, or start with a taste signal.
+        <p className="mt-3 text-sm text-zinc-400">
+          Select a sample persona for an instant live demo, or input custom taste seeds and dietary constraints.
         </p>
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-          <Link href="/results?persona=p1" className="btn-primary">
-            Try Sylvia
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <Link href="/results?persona=p1" className="btn-primary !text-sm">
+            Launch Sylvia&apos;s Shortlist
           </Link>
-          <Link href="/plan" className="btn-secondary">
-            Build your own
+          <Link href="/plan" className="btn-secondary !text-sm">
+            Build Custom
           </Link>
-        </div>
-        <div className="mt-6">
-          <Disclaimer compact />
         </div>
       </div>
     </section>
@@ -133,18 +127,16 @@ function NoRequest() {
 
 function EmptyResult({ editHref }: { editHref: string }) {
   return (
-    <div className="card-paper p-6 sm:p-8">
-      <p className="eyebrow">No matches</p>
-      <h2 className="mt-2 font-display text-[1.8rem] leading-tight">
-        We could not find a place that clears those filters.
+    <div className="liquid-glass p-6 sm:p-8 text-center">
+      <p className="eyebrow">Zero Matches Found</p>
+      <h2 className="mt-2 font-display text-2xl font-bold text-zinc-100">
+        No venues satisfied every selected constraint.
       </h2>
-      <p className="mt-2 text-[1rem] leading-relaxed text-muted">
-        A mobility requirement may have excluded every candidate in the data. Try removing one
-        filter or widening the location — we would rather show you an honest empty list than a
-        bad match.
+      <p className="mt-2 text-sm text-zinc-400 max-w-md mx-auto">
+        A strict mobility or acoustic requirement may have excluded candidates in this radius. Try softening one constraint.
       </p>
-      <Link href={editHref} className="btn-secondary mt-5">
-        Edit needs
+      <Link href={editHref} className="btn-secondary mt-5 !text-sm">
+        Adjust Constraints
       </Link>
     </div>
   );
@@ -153,9 +145,9 @@ function EmptyResult({ editHref }: { editHref: string }) {
 function ResultsLoading() {
   return (
     <section className="container-page py-12">
-      <div className="h-5 w-28 rounded skeleton" />
-      <div className="mt-4 h-12 w-2/3 rounded skeleton" />
-      <div className="mt-3 h-5 w-1/2 rounded skeleton" />
+      <div className="h-5 w-28 rounded bg-white/[0.08] animate-pulse" />
+      <div className="mt-4 h-10 w-2/3 rounded bg-white/[0.08] animate-pulse" />
+      <div className="mt-3 h-4 w-1/2 rounded bg-white/[0.05] animate-pulse" />
       <div className="mt-8">
         <CardSkeletons />
       </div>
@@ -169,7 +161,7 @@ export function ResultsClient() {
 
   const [request, setRequest] = useState<RecommendRequest | null>(null);
   const [personaId, setPersonaId] = useState<string | null>(null);
-  const [title, setTitle] = useState("Your shortlist");
+  const [title, setTitle] = useState("Your Shortlist");
   const [noRequest, setNoRequest] = useState(false);
   const [cards, setCards] = useState<Map<string, WireCard>>(() => new Map());
   const [finalIds, setFinalIds] = useState<string[]>([]);
@@ -193,7 +185,7 @@ export function ResultsClient() {
         limit: 5,
       });
       setPersonaId(persona.id);
-      setTitle(`A shortlist for ${persona.name}`);
+      setTitle(`Curated Shortlist for ${persona.name}`);
       setNoRequest(false);
       return;
     }
@@ -202,7 +194,7 @@ export function ResultsClient() {
     if (draft) {
       setRequest(draft);
       setPersonaId(null);
-      setTitle("Your shortlist");
+      setTitle("Your Custom Shortlist");
       setNoRequest(false);
       return;
     }
@@ -345,44 +337,48 @@ export function ResultsClient() {
 
   return (
     <>
-      <section className="border-b border-line/70 bg-paper/40">
-        <div className="container-page py-9 sm:py-12">
+      {/* Top Banner Header */}
+      <section className="border-b border-white/[0.08] bg-obsidian-900/60 backdrop-blur-md">
+        <div className="container-page py-8 sm:py-12">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-[0.9rem] font-semibold text-muted transition hover:text-ink"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 transition hover:text-zinc-100"
           >
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Home
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+            Back to Home
           </Link>
 
-          <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p className="eyebrow">Your shortlist</p>
-              <h1 className="mt-2 font-display text-[2.6rem] font-semibold leading-[1.04] sm:text-[3.5rem]">
+              <p className="eyebrow">Real-Time Recommendations</p>
+              <h1 className="mt-2 font-display text-3xl sm:text-5xl font-bold tracking-tight text-zinc-100">
                 {title}
               </h1>
-              <p className="mt-3 text-[1.05rem] leading-relaxed text-muted">
+              <p className="mt-3 text-sm text-zinc-300 font-medium">
                 {request.location}
-                {summary.length > 0 ? ` · ${summary.join(" · ")}` : " · no extra needs"}
+                {summary.length > 0 ? ` · ${summary.join(" · ")}` : " · No extra constraints"}
               </p>
-              <p className="mt-1 text-[0.95rem] text-muted">Taste: {tasteNames}</p>
+              <p className="mt-1 font-mono text-xs text-amber-400/90">
+                Taste Seeds: {tasteNames}
+              </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <Link href={editHref} className="btn-secondary !min-h-[48px] !px-4 !text-[0.95rem]">
-                Edit needs
+            <div className="flex flex-wrap gap-2.5">
+              <Link href={editHref} className="btn-secondary !min-h-[42px] !px-4 !text-xs font-semibold">
+                <SlidersHorizontal className="h-3.5 w-3.5 text-amber-400" />
+                Edit Profile
               </Link>
               <button
                 type="button"
                 onClick={() => setRunId((value) => value + 1)}
                 disabled={loading}
-                className="btn-secondary !min-h-[48px] !px-4 !text-[0.95rem]"
+                className="btn-secondary !min-h-[42px] !px-4 !text-xs font-semibold"
               >
                 <RefreshCw
-                  className={`h-4 w-4 ${loading ? "animate-spin" : ""}`}
+                  className={`h-3.5 w-3.5 text-amber-400 ${loading ? "animate-spin" : ""}`}
                   aria-hidden="true"
                 />
-                Refresh
+                Re-stream
               </button>
             </div>
           </div>
@@ -392,46 +388,35 @@ export function ResultsClient() {
           </div>
 
           {mockMode && (
-            <div className="mt-3 flex gap-3 rounded-xl border border-teal/25 bg-teal-light/40 p-4 text-[0.95rem] leading-relaxed">
-              <Info className="mt-0.5 h-5 w-5 shrink-0 text-teal" aria-hidden="true" />
-              <p>
-                <strong className="font-semibold">Sample data.</strong> No Qloo key is
-                configured. Every venue here is fictional, and the full agent flow still runs.
-              </p>
+            <div className="liquid-glass mt-3 flex items-center gap-2.5 border-amber-500/20 bg-amber-500/05 p-3 text-xs text-amber-300">
+              <Info className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
+              <p>Sample fixtures active. Complete agent loop executes deterministically.</p>
             </div>
           )}
           {liveQlooFailed && (
-            <div className="mt-3 flex gap-3 rounded-xl border border-amber/40 bg-amber-light/60 p-4 text-[0.95rem] leading-relaxed">
-              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber" aria-hidden="true" />
-              <p>
-                Live Qloo results were unavailable. Sample venues are shown and labeled so you
-                can still evaluate the flow.
-              </p>
+            <div className="liquid-glass mt-3 flex items-center gap-2.5 border-amber-500/30 bg-amber-950/40 p-3 text-xs text-amber-200">
+              <AlertTriangle className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
+              <p>Live Qloo API timed out. Fallback fixtures surfaced with transparent labeling.</p>
             </div>
           )}
           {sampleLocation && (
-            <div className="mt-3 flex gap-3 rounded-xl border border-amber/40 bg-amber-light/60 p-4 text-[0.95rem] leading-relaxed">
-              <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber" aria-hidden="true" />
-              <p>
-                Sample data currently covers Brooklyn, Edison, and Chicago. Add a Qloo key for
-                live coverage in other cities.
-              </p>
+            <div className="liquid-glass mt-3 flex items-center gap-2.5 border-amber-500/20 bg-amber-500/05 p-3 text-xs text-zinc-400">
+              <Info className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
+              <p>Demo fixtures cover Brooklyn, Edison, and Chicago.</p>
             </div>
           )}
           {fewResults && (
-            <div className="mt-3 flex gap-3 rounded-xl border border-amber/40 bg-amber-light/60 p-4 text-[0.95rem] leading-relaxed">
-              <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber" aria-hidden="true" />
-              <p>Fewer than three live matches. We are showing what exists rather than padding.</p>
+            <div className="liquid-glass mt-3 flex items-center gap-2.5 border-amber-500/20 bg-amber-500/05 p-3 text-xs text-zinc-400">
+              <Info className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
+              <p>Strict dining constraints filtered available candidates to verified matches only.</p>
             </div>
           )}
-
-          <p className="sr-only" aria-live="polite">
-            {loading ? "Finding places." : done ? `${done.count} places found.` : ""}
-          </p>
         </div>
       </section>
 
+      {/* Main Stream Area */}
       <div className="container-page grid gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+        {/* Right Aside HUD */}
         <aside className="lg:col-start-2 lg:row-start-1">
           <div className="lg:sticky lg:top-24">
             <AgentSteps steps={steps} done={done} loading={loading} />
@@ -439,6 +424,7 @@ export function ResultsClient() {
           </div>
         </aside>
 
+        {/* Left Results Column */}
         <div className="space-y-6 lg:col-start-1 lg:row-start-1" aria-busy={loading}>
           {error && (
             <ErrorBanner
@@ -448,8 +434,6 @@ export function ResultsClient() {
             />
           )}
 
-          {orderedCards.length > 0 && <h2 className="sr-only">Restaurant shortlist</h2>}
-
           {orderedCards.map((card, index) => (
             <RestaurantCard key={card.id} card={card} rank={index + 1} />
           ))}
@@ -458,20 +442,6 @@ export function ResultsClient() {
 
           {!loading && !error && done && done.count === 0 && (
             <EmptyResult editHref={editHref} />
-          )}
-
-          {!loading && !error && !done && orderedCards.length === 0 && (
-            <ErrorBanner
-              message="The shortlist did not finish. Please try again."
-              onRetry={() => setRunId((value) => value + 1)}
-              loading={loading}
-            />
-          )}
-
-          {orderedCards.length > 0 && (
-            <p className="text-center text-[0.9rem] text-muted">
-              That&apos;s the shortlist. Call ahead — the data cannot taste the soup.
-            </p>
           )}
         </div>
       </div>

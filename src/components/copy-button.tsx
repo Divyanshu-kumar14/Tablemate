@@ -50,18 +50,33 @@ export function CopyButton({
     <button
       type="button"
       onClick={copy}
-      className={cn("btn-secondary !min-h-[48px] !px-4 !text-[0.95rem]", className)}
+      className={cn(
+        "inline-flex min-h-[42px] items-center gap-2 rounded-xl border px-3.5 py-1.5 text-xs font-semibold backdrop-blur-md transition-all duration-200 active:scale-95",
+        status === "copied"
+          ? "border-emerald-500/40 bg-emerald-950/60 text-emerald-300 shadow-[0_0_15px_rgba(52,211,153,0.3)]"
+          : status === "error"
+            ? "border-red-500/40 bg-red-950/60 text-red-300"
+            : "border-white/[0.12] bg-white/[0.04] text-zinc-200 hover:border-amber-400/40 hover:bg-white/[0.08] hover:text-white",
+        className,
+      )}
+      aria-live="polite"
     >
       {status === "copied" ? (
-        <Check className="h-4 w-4 text-[#166534]" aria-hidden="true" />
+        <>
+          <Check className="h-4 w-4 text-emerald-400" aria-hidden="true" />
+          <span>Copied to Clipboard!</span>
+        </>
       ) : status === "error" ? (
-        <AlertTriangle className="h-4 w-4 text-amber" aria-hidden="true" />
+        <>
+          <AlertTriangle className="h-4 w-4 text-red-400" aria-hidden="true" />
+          <span>Copy Failed</span>
+        </>
       ) : (
-        <Copy className="h-4 w-4" aria-hidden="true" />
+        <>
+          <Copy className="h-4 w-4 text-amber-400" aria-hidden="true" />
+          <span>{label}</span>
+        </>
       )}
-      <span aria-live="polite">
-        {status === "copied" ? "Copied" : status === "error" ? "Copy failed" : label}
-      </span>
     </button>
   );
 }
