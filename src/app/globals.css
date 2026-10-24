@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --obsidian: #070709;
-  --surface: #0e0e13;
-  --surface-glass: rgba(18, 18, 24, 0.72);
+  --obsidian: #08080b;
+  --surface: #0f0f14;
+  --surface-glass: rgba(15, 15, 20, 0.85);
   --ink: #f4f4f6;
-  --muted: #9494a0;
+  --muted: #a1a1aa;
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.16);
   --amber: #f59e0b;
@@ -28,13 +28,12 @@ body {
   min-height: 100vh;
   background-color: var(--obsidian);
   background-image:
-    radial-gradient(1200px 600px at 50% -10%, rgba(245, 158, 11, 0.08), transparent 70%),
-    radial-gradient(900px 500px at 85% 15%, rgba(217, 119, 6, 0.04), transparent 60%),
-    radial-gradient(900px 500px at 15% 45%, rgba(245, 158, 11, 0.03), transparent 65%);
+    radial-gradient(1100px 500px at 50% -5%, rgba(245, 158, 11, 0.06), transparent 70%),
+    radial-gradient(800px 400px at 85% 15%, rgba(217, 119, 6, 0.025), transparent 60%);
   background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -42,9 +41,11 @@ body {
 h1,
 h2,
 h3,
+h4,
 .font-display {
-  font-family: var(--font-fraunces);
-  font-variation-settings: "SOFT" 30, "WONK" 0;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  letter-spacing: -0.032em;
+  font-weight: 700;
 }
 
 h1,
@@ -57,7 +58,7 @@ p {
 }
 
 ::selection {
-  background: rgba(245, 158, 11, 0.25);
+  background: rgba(245, 158, 11, 0.28);
   color: #fff;
 }
 
@@ -90,7 +91,8 @@ input[type="checkbox"] {
   border-radius: 0.6rem;
   background: var(--amber);
   color: #070709;
-  padding: 0.8rem 1.1rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   text-decoration: none;
   transition: transform 150ms ease;
@@ -102,17 +104,17 @@ input[type="checkbox"] {
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
   }
 
   .eyebrow {
-    @apply font-mono text-xs uppercase tracking-widest text-amber-400/90;
+    @apply font-mono text-[11px] uppercase tracking-widest text-amber-400 font-semibold;
     line-height: 1.4;
   }
 
-  /* KokonutUI Liquid Glass Container */
+  /* KokonutUI Apple 2025 Liquid Glass Container */
   .liquid-glass {
-    @apply relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl shadow-glass transition-all duration-300;
+    @apply relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0e0e13]/85 backdrop-blur-2xl shadow-glass transition-all duration-300;
   }
 
   .liquid-glass:hover {
@@ -120,22 +122,17 @@ input[type="checkbox"] {
   }
 
   .liquid-glass-specular {
-    @apply relative before:absolute before:inset-x-0 before:top-0 before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-white/25 before:to-transparent;
+    @apply relative before:absolute before:inset-x-0 before:top-0 before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent;
   }
 
   /* Card styling with subtle gradient depth */
   .card-paper {
-    @apply relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.015] backdrop-blur-xl shadow-glass transition-all duration-300 hover:border-amber-400/30;
+    @apply relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-transparent backdrop-blur-xl shadow-glass transition-all duration-300 hover:border-amber-400/30;
   }
 
   .btn-primary {
-    @apply inline-flex min-h-[54px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3 text-lg font-semibold text-zinc-950 shadow-amber-glow transition-all duration-200 active:scale-[0.98];
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 px-5 py-2.5 text-xs sm:text-sm font-semibold text-zinc-950 shadow-[0_0_20px_rgba(245,158,11,0.25)] transition-all duration-150 active:scale-[0.98];
     text-decoration: none;
-  }
-
-  .btn-primary:hover {
-    @apply from-amber-400 to-amber-500 shadow-[0_0_30px_0_rgba(245,158,11,0.45)];
-    transform: translateY(-1px);
   }
 
   .btn-primary:disabled {
@@ -144,7 +141,7 @@ input[type="checkbox"] {
   }
 
   .btn-secondary {
-    @apply inline-flex min-h-[50px] items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-5 py-2.5 text-lg font-semibold text-zinc-100 backdrop-blur-md transition-all duration-200 hover:border-white/[0.25] hover:bg-white/[0.08] active:scale-[0.98];
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.03] px-5 py-2.5 text-xs sm:text-sm font-semibold text-zinc-200 backdrop-blur-md transition-all duration-150 hover:border-white/[0.24] hover:bg-white/[0.07] hover:text-white active:scale-[0.98];
     text-decoration: none;
   }
 
@@ -153,22 +150,20 @@ input[type="checkbox"] {
   }
 
   .field {
-    @apply min-h-[54px] w-full rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 text-lg text-zinc-100 placeholder-zinc-500 backdrop-blur-md transition-all duration-200 focus:border-amber-400/60 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-amber-400/20;
+    @apply min-h-[46px] w-full rounded-xl border border-white/[0.1] bg-white/[0.03] px-4 text-sm text-zinc-100 placeholder-zinc-500 backdrop-blur-md transition-all duration-200 focus:border-amber-400/60 focus:bg-white/[0.05] focus:outline-none focus:ring-1 focus:ring-amber-400/30;
   }
 
   .label-lg {
-    @apply block text-lg font-medium text-zinc-200;
+    @apply block text-sm font-semibold text-zinc-200;
   }
 
   .helper {
-    @apply mt-1 text-zinc-400;
-    font-size: 0.9rem;
+    @apply mt-1 text-zinc-400 text-xs;
     line-height: 1.5;
   }
 
   .chip {
-    @apply inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 font-medium text-zinc-300 backdrop-blur-sm transition-all;
-    font-size: 0.9rem;
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs font-medium text-zinc-300 backdrop-blur-sm transition-all;
     line-height: 1.4;
   }
 
@@ -203,6 +198,39 @@ input[type="checkbox"] {
   100% {
     background-position: -100% 0;
   }
+}
+
+@keyframes text-gradient-sweep {
+  0% {
+    background-position: 105% 50%;
+  }
+  100% {
+    background-position: -25% 50%;
+  }
+}
+
+.text-gradient-sweep {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 36%,
+    #fef08a 42%,
+    #fbbf24 47%,
+    #f59e0b 51%,
+    #d97706 55%,
+    #fbbf24 59%,
+    #fef08a 64%,
+    #ffffff 70%,
+    #ffffff 100%
+  );
+  background-size: 280% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: text-gradient-sweep 6.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  display: inline-block;
+  will-change: background-position;
 }
 
 @keyframes soft-pulse {

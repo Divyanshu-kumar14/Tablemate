@@ -6,7 +6,7 @@ import { Sparkles, ChevronDown, Check } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 const AUDIENCES = [
-  { id: "parent", label: "Planning for an aging parent", subtitle: "Connecting Mom or Dad's lifelong tastes with safe dining." },
+  { id: "parent", label: "Planning for an aging parent", subtitle: "Connecting Mom or Dad's lifelong tastes with dignified dining." },
   { id: "spouse", label: "Planning for a partner / spouse", subtitle: "Intimate, quiet rooms with modified texture and low sodium." },
   { id: "pro", label: "Senior living & care concierge", subtitle: "Auditable venue intelligence for resident outings & family visits." },
 ];

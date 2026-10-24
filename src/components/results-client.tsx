@@ -388,10 +388,10 @@ export function ResultsClient() {
           </div>
 
           {mockMode && (
-            <div className="liquid-glass mt-3 flex items-center gap-2.5 border-amber-500/20 bg-amber-500/05 p-3 text-xs text-amber-300">
-              <Info className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
+            <div className="mt-2.5 flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-xs text-zinc-400">
+              <Info className="h-3.5 w-3.5 shrink-0 text-amber-400/80" aria-hidden="true" />
               <p>
-                <strong className="font-semibold text-white">Sample data.</strong> No Qloo key is configured. Every venue here is fictional, and the full agent flow still runs.
+                <strong className="font-semibold text-zinc-200">Sample data.</strong> No Qloo key is configured. Every venue here is fictional, and the full agent flow still runs.
               </p>
             </div>
           )}
@@ -410,7 +410,7 @@ export function ResultsClient() {
           {fewResults && (
             <div className="liquid-glass mt-3 flex items-center gap-2.5 border-amber-500/20 bg-amber-500/05 p-3 text-xs text-zinc-400">
               <Info className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
-              <p>Strict dining constraints filtered available candidates to verified matches only.</p>
+              <p>Strict dining constraints filtered available candidates to calibrated matches only.</p>
             </div>
           )}
         </div>

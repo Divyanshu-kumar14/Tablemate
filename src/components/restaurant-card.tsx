@@ -139,7 +139,7 @@ export function RestaurantCard({ card, rank }: { card: WireCard; rank: number })
               </ul>
             ) : (
               <p className="mt-2.5 text-xs text-zinc-400">
-                Ranked using cross-domain latent cultural affinity and verified tags.
+                Ranked using cross-domain latent cultural affinity and evidence tags.
               </p>
             )}
 
