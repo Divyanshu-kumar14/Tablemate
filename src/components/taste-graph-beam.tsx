@@ -17,14 +17,14 @@ export function TasteGraphBeam() {
   const [activeSignal, setActiveSignal] = useState<string | null>(null);
 
   return (
-    <div className="relative mx-auto w-full max-w-4xl py-6">
+    <div className="relative mx-auto w-full max-w-4xl py-2 sm:py-4">
       {/* Background radial highlight */}
       <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-transparent blur-2xl" />
 
       {/* Main glass visual container */}
       <div
         ref={containerRef}
-        className="liquid-glass liquid-glass-specular relative flex flex-col items-center justify-between gap-8 p-6 sm:flex-row sm:gap-4 sm:p-10"
+        className="liquid-glass liquid-glass-specular relative flex flex-col items-center justify-between gap-6 p-5 sm:flex-row sm:gap-4 sm:p-6 lg:p-8"
       >
         {/* Animated Beams connecting Inputs -> Qloo Core */}
         <AnimatedBeam
@@ -32,7 +32,7 @@ export function TasteGraphBeam() {
           fromRef={musicRef}
           toRef={qlooCoreRef}
           duration={3.2}
-          curvature={-25}
+          curvature={-22}
           gradientStartColor="#fbbf24"
           gradientStopColor="#d97706"
         />
@@ -52,7 +52,7 @@ export function TasteGraphBeam() {
           toRef={qlooCoreRef}
           duration={3.5}
           delay={1.2}
-          curvature={25}
+          curvature={22}
           gradientStartColor="#fbbf24"
           gradientStopColor="#d97706"
         />
@@ -71,8 +71,8 @@ export function TasteGraphBeam() {
         />
 
         {/* Left: 3 Taste Input Capsules */}
-        <div className="flex flex-col gap-3.5 z-10 w-full sm:w-auto">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400/70 sm:hidden">
+        <div className="flex flex-col gap-2.5 z-10 w-full sm:w-auto">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400/80 sm:hidden">
             Cultural Taste Seeds
           </span>
 
@@ -83,12 +83,12 @@ export function TasteGraphBeam() {
             onHoverStart={() => setActiveSignal("Miles Davis")}
             onHoverEnd={() => setActiveSignal(null)}
             className={cn(
-              "flex items-center gap-3 rounded-xl border border-white/[0.08] bg-obsidian-850/80 px-4 py-2.5 backdrop-blur-md transition-all cursor-pointer",
+              "flex items-center gap-3 rounded-xl border border-white/[0.08] bg-obsidian-850/80 px-3.5 py-2 backdrop-blur-md transition-all cursor-pointer",
               activeSignal === "Miles Davis" && "border-amber-400/50 shadow-[0_0_20px_rgba(245,158,11,0.25)]",
             )}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <Music className="h-4 w-4" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <Music className="h-3.5 w-3.5" />
             </div>
             <div>
               <p className="text-xs font-semibold text-zinc-100">Miles Davis</p>
@@ -103,12 +103,12 @@ export function TasteGraphBeam() {
             onHoverStart={() => setActiveSignal("Casablanca")}
             onHoverEnd={() => setActiveSignal(null)}
             className={cn(
-              "flex items-center gap-3 rounded-xl border border-white/[0.08] bg-obsidian-850/80 px-4 py-2.5 backdrop-blur-md transition-all cursor-pointer",
+              "flex items-center gap-3 rounded-xl border border-white/[0.08] bg-obsidian-850/80 px-3.5 py-2 backdrop-blur-md transition-all cursor-pointer",
               activeSignal === "Casablanca" && "border-amber-400/50 shadow-[0_0_20px_rgba(245,158,11,0.25)]",
             )}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <Film className="h-4 w-4" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <Film className="h-3.5 w-3.5" />
             </div>
             <div>
               <p className="text-xs font-semibold text-zinc-100">Casablanca</p>
@@ -123,12 +123,12 @@ export function TasteGraphBeam() {
             onHoverStart={() => setActiveSignal("Italian")}
             onHoverEnd={() => setActiveSignal(null)}
             className={cn(
-              "flex items-center gap-3 rounded-xl border border-white/[0.08] bg-obsidian-850/80 px-4 py-2.5 backdrop-blur-md transition-all cursor-pointer",
+              "flex items-center gap-3 rounded-xl border border-white/[0.08] bg-obsidian-850/80 px-3.5 py-2 backdrop-blur-md transition-all cursor-pointer",
               activeSignal === "Italian" && "border-amber-400/50 shadow-[0_0_20px_rgba(245,158,11,0.25)]",
             )}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <UtensilsCrossed className="h-4 w-4" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <UtensilsCrossed className="h-3.5 w-3.5" />
             </div>
             <div>
               <p className="text-xs font-semibold text-zinc-100">Classic Italian</p>
@@ -139,15 +139,15 @@ export function TasteGraphBeam() {
 
         {/* Center: Glowing Qloo Cultural Graph Core */}
         <div ref={qlooCoreRef} className="relative z-10 flex flex-col items-center">
-          <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-full border border-amber-500/30 bg-gradient-to-br from-amber-500/20 via-obsidian-900 to-obsidian-950 p-1 shadow-[0_0_35px_rgba(245,158,11,0.25)]">
+          <div className="relative flex h-22 w-22 sm:h-24 sm:w-24 items-center justify-center rounded-full border border-amber-500/30 bg-gradient-to-br from-amber-500/20 via-obsidian-900 to-obsidian-950 p-1 shadow-[0_0_35px_rgba(245,158,11,0.25)]">
             {/* Spinning decorative orbit */}
             <div className="absolute inset-0 rounded-full border border-dashed border-amber-400/40 animate-[spin_20s_linear_infinite]" />
             <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-obsidian-900/90 text-center">
-              <Sparkles className="h-6 w-6 text-amber-400 animate-pulse" />
+              <Sparkles className="h-5 w-5 text-amber-400 animate-pulse" />
               <span className="mt-1 font-mono text-[9px] font-bold uppercase tracking-wider text-amber-300">
                 Qloo Core
               </span>
-              <span className="font-mono text-[8px] text-zinc-500">250M+ Taste Graph</span>
+              <span className="font-mono text-[8px] text-zinc-500">250M+ Entities</span>
             </div>
           </div>
         </div>
@@ -156,23 +156,23 @@ export function TasteGraphBeam() {
         <motion.div
           ref={outputRef}
           whileHover={{ scale: 1.02 }}
-          className="z-10 w-full sm:w-72 rounded-xl border border-emerald-500/30 bg-obsidian-850/90 p-4 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
+          className="z-10 w-full sm:w-68 rounded-xl border border-emerald-500/30 bg-obsidian-850/90 p-3.5 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
         >
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-400">
-              <ShieldCheck className="h-3 w-3" /> 98% Taste Fit
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1.5">
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-400">
+              <ShieldCheck className="h-3 w-3" /> 98% Match
             </span>
             <span className="font-mono text-[10px] text-zinc-400">Brooklyn, NY</span>
           </div>
 
-          <div className="mt-2.5">
-            <h4 className="text-sm font-semibold text-zinc-100">Cobble Hill Trattoria</h4>
-            <p className="mt-1 text-xs text-zinc-300 line-clamp-2">
+          <div className="mt-2">
+            <h4 className="text-xs sm:text-sm font-semibold text-zinc-100">Cobble Hill Trattoria</h4>
+            <p className="mt-0.5 text-[11px] text-zinc-300 line-clamp-2">
               Intimate, quiet Italian room with soft risotto and step-free access.
             </p>
           </div>
 
-          <div className="mt-3 flex items-center justify-between border-t border-white/[0.06] pt-2 text-[10px] text-amber-400/90 font-mono">
+          <div className="mt-2.5 flex items-center justify-between border-t border-white/[0.06] pt-1.5 text-[10px] text-amber-400/90 font-mono">
             <span className="flex items-center gap-1">
               <HeartHandshake className="h-3 w-3" /> Soft texture likely
             </span>
