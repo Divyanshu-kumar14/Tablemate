@@ -16,8 +16,6 @@
   --likely: #f59e0b;
   --ask: #94a3b8;
   --focus: #f59e0b;
-  --font-fraunces: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --font-source-sans: "Avenir Next", Avenir, Inter, system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -35,7 +33,7 @@ body {
     radial-gradient(900px 500px at 15% 45%, rgba(245, 158, 11, 0.03), transparent 65%);
   background-attachment: fixed;
   color: var(--ink);
-  font-family: var(--font-source-sans);
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -224,7 +222,7 @@ input[type="checkbox"] {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #efe7db 25%, #f8f3ea 40%, #efe7db 60%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0.03) 60%);
   background-size: 300% 100%;
   animation: shimmer 1.6s ease-in-out infinite;
 }
@@ -238,10 +236,19 @@ input[type="checkbox"] {
     scroll-behavior: auto;
   }
 
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
   .animate-rise,
   .skeleton,
   .status-running {
-    animation: none;
+    animation: none !important;
   }
 }
 

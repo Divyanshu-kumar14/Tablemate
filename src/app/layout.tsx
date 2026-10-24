@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Source_Sans_3 } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,9 +10,15 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-source-sans",
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -44,13 +50,16 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FBF7F0",
+  themeColor: "#070709",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${sourceSans.variable}`}>
-      <body>
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="font-sans antialiased bg-obsidian-950 text-ink min-h-screen">
         <a href="#main" className="skip-link">
           Skip to content
         </a>

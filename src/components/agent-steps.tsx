@@ -33,7 +33,7 @@ export function AgentSteps({
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-amber-400" />
           <h2 className="font-mono text-xs uppercase tracking-widest text-amber-400 font-bold">
-            Agent Execution HUD
+            Agent trace
           </h2>
         </div>
         <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] px-2.5 py-0.5 font-mono text-[10px] text-zinc-300">
@@ -43,7 +43,7 @@ export function AgentSteps({
               Streaming...
             </>
           ) : done?.mode === "mock" ? (
-            "Sample Mode"
+            "Sample mode"
           ) : done ? (
             `${done.qloo_calls} Qloo Calls · ${done.ms}ms`
           ) : (

@@ -33,10 +33,8 @@ export function EvidenceChip({ item }: { item: Pick<FitItem, "need" | "label"> }
       title={copy.description}
     >
       <span className={cn("h-2 w-2 shrink-0 rounded-full", style.dot, style.glow)} aria-hidden="true" />
-      <span>
-        {item.need}: <strong className="font-semibold text-white">{copy.label}</strong>
-      </span>
-      <span className="sr-only"> ({copy.description})</span>
+      {item.need}: <strong className="font-semibold text-white">{copy.label}</strong>
+      <span className="sr-only"> — {copy.description}</span>
     </span>
   );
 }

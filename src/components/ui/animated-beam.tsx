@@ -79,8 +79,16 @@ export function AnimatedBeam({
       const endX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset;
       const endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset;
 
-      const controlY = startY - curvature;
-      const d = `M ${startX},${startY} Q ${(startX + endX) / 2},${controlY} ${endX},${endY}`;
+      const midX = (startX + endX) / 2;
+      const midY = (startY + endY) / 2;
+      const dx = endX - startX;
+      const dy = endY - startY;
+      const dist = Math.hypot(dx, dy) || 1;
+      const nx = -dy / dist;
+      const ny = dx / dist;
+      const controlX = midX + nx * curvature;
+      const controlY = midY + ny * curvature;
+      const d = `M ${startX},${startY} Q ${controlX},${controlY} ${endX},${endY}`;
       setPathD(d);
     };
 

@@ -50,7 +50,7 @@ export function TextSizeControl() {
         onClick={() => change(-STEP)}
         disabled={size <= MIN}
         aria-label="Decrease text size"
-        className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-300 transition hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+        className="flex h-12 w-12 items-center justify-center rounded-lg text-zinc-300 transition hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
       >
         <Minus className="h-4 w-4" aria-hidden="true" />
       </button>
@@ -66,7 +66,7 @@ export function TextSizeControl() {
         onClick={() => change(STEP)}
         disabled={size >= MAX}
         aria-label="Increase text size"
-        className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-300 transition hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+        className="flex h-12 w-12 items-center justify-center rounded-lg text-zinc-300 transition hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
       >
         <Plus className="h-4 w-4" aria-hidden="true" />
       </button>

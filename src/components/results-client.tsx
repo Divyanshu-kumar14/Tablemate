@@ -107,17 +107,17 @@ function NoRequest() {
       <div className="liquid-glass liquid-glass-specular mx-auto max-w-xl p-8 sm:p-12">
         <p className="eyebrow">Empty Profile</p>
         <h1 className="mt-3 font-display text-3xl font-bold text-zinc-100">
-          Build a shortlist to get started.
+          Build a shortlist first.
         </h1>
         <p className="mt-3 text-sm text-zinc-400">
           Select a sample persona for an instant live demo, or input custom taste seeds and dietary constraints.
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <Link href="/results?persona=p1" className="btn-primary !text-sm">
-            Launch Sylvia&apos;s Shortlist
+            Try Sylvia
           </Link>
           <Link href="/plan" className="btn-secondary !text-sm">
-            Build Custom
+            Build your own
           </Link>
         </div>
       </div>
@@ -185,7 +185,7 @@ export function ResultsClient() {
         limit: 5,
       });
       setPersonaId(persona.id);
-      setTitle(`Curated Shortlist for ${persona.name}`);
+      setTitle(`A shortlist for ${persona.name}`);
       setNoRequest(false);
       return;
     }
@@ -359,7 +359,7 @@ export function ResultsClient() {
                 {summary.length > 0 ? ` · ${summary.join(" · ")}` : " · No extra constraints"}
               </p>
               <p className="mt-1 font-mono text-xs text-amber-400/90">
-                Taste Seeds: {tasteNames}
+                Taste: {tasteNames}
               </p>
             </div>
 
@@ -390,7 +390,9 @@ export function ResultsClient() {
           {mockMode && (
             <div className="liquid-glass mt-3 flex items-center gap-2.5 border-amber-500/20 bg-amber-500/05 p-3 text-xs text-amber-300">
               <Info className="h-4 w-4 shrink-0 text-amber-400" aria-hidden="true" />
-              <p>Sample fixtures active. Complete agent loop executes deterministically.</p>
+              <p>
+                <strong className="font-semibold text-white">Sample data.</strong> No Qloo key is configured. Every venue here is fictional, and the full agent flow still runs.
+              </p>
             </div>
           )}
           {liveQlooFailed && (

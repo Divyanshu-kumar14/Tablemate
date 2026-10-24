@@ -133,7 +133,7 @@ export function TasteInput({
 
       <div className="relative mt-4">
         <label htmlFor="taste-search" className="label-lg">
-          Search Qloo Cultural Catalog
+          Search for a favorite
         </label>
         <div className="relative mt-2">
           <Search
@@ -183,7 +183,7 @@ export function TasteInput({
 
         {/* Results dropdown */}
         {open && status !== "error" && (
-          <div className="liquid-glass absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-white/[0.12] bg-obsidian-900/95 p-2 shadow-2xl backdrop-blur-2xl">
+          <div className="liquid-glass mt-2 overflow-hidden rounded-xl border border-white/[0.12] bg-obsidian-900/95 p-2 shadow-2xl backdrop-blur-2xl">
             {status === "loading" && results.length === 0 ? (
               <p className="flex items-center gap-2 px-3 py-3 text-xs text-zinc-400">
                 <Loader2 className="h-4 w-4 animate-spin text-amber-400" aria-hidden="true" />
@@ -242,8 +242,12 @@ export function TasteInput({
               key={example.label}
               type="button"
               onClick={() => {
-                setType(example.type);
-                setQuery(example.query);
+                addResult({
+                  name: example.label,
+                  type: example.type,
+                  qlooId: `mock:${example.type}:${example.label.toLowerCase().replace(/\s+/g, "-")}`,
+                  subtitle: SEED_TYPE_LABEL[example.type],
+                });
               }}
               className="inline-flex min-h-[38px] items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 text-xs font-medium text-zinc-300 transition-colors hover:border-amber-400/40 hover:text-amber-300"
             >

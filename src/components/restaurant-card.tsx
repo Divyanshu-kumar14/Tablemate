@@ -91,7 +91,7 @@ export function RestaurantCard({ card, rank }: { card: WireCard; rank: number })
           <summary className="flex min-h-[58px] items-center justify-between gap-4 px-4 py-3 sm:px-5 cursor-pointer">
             <span className="flex items-center gap-2.5 text-sm sm:text-base font-semibold text-amber-300">
               <Phone className="h-4 w-4 text-amber-400" aria-hidden="true" />
-              Your 30-Second Host Verification Script
+              Your 30-second call
             </span>
             <span className="flex items-center gap-2 font-mono text-xs text-zinc-400">
               {card.before_you_go.length} questions
@@ -171,20 +171,20 @@ export function RestaurantCard({ card, rank }: { card: WireCard; rank: number })
 
             <div className="mt-4 flex flex-wrap gap-2.5">
               {phoneHref ? (
-                <a href={phoneHref} className="btn-secondary !min-h-[40px] !px-3.5 !text-xs font-semibold">
+                <a href={phoneHref} className="btn-secondary !min-h-[42px] !px-3.5 !text-xs font-semibold flex-1 sm:flex-initial justify-center">
                   <Phone className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
                   Call Ahead
                 </a>
               ) : (
-                <span className="inline-flex min-h-[40px] items-center rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 text-xs text-zinc-500">
-                  Phone unlisted
+                <span className="inline-flex min-h-[42px] items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 text-xs text-zinc-400 flex-1 sm:flex-initial">
+                  Phone not listed
                 </span>
               )}
               <a
                 href={mapsHref}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="btn-secondary !min-h-[40px] !px-3.5 !text-xs font-semibold"
+                className="btn-secondary !min-h-[42px] !px-3.5 !text-xs font-semibold flex-1 sm:flex-initial justify-center"
                 aria-label={`Directions to ${card.name}`}
               >
                 <ExternalLink className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
@@ -197,15 +197,18 @@ export function RestaurantCard({ card, rank }: { card: WireCard; rank: number })
         {/* Label Explanation Details */}
         <details className="liquid-glass group rounded-xl border border-white/[0.08] p-4 text-xs">
           <summary className="flex items-center justify-between font-semibold text-zinc-300 cursor-pointer">
-            <span>Evidence Breakdown per Constraint</span>
+            <span>How we labeled this</span>
             <ChevronDown className="h-4 w-4 text-zinc-500 transition-transform group-open:rotate-180" aria-hidden="true" />
           </summary>
 
           {card.fit.length > 0 && (
             <ul className="mt-3.5 space-y-3 border-t border-white/[0.06] pt-3">
               {card.fit.map((item) => (
-                <li key={`why-${item.need}-${item.label}`}>
-                  <EvidenceChip item={item} />
+                <li key={`why-${item.need}-${item.label}`} className="text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-zinc-200">{item.need}</span>
+                    <span className="font-mono text-[10px] uppercase text-zinc-400">({item.label})</span>
+                  </div>
                   <p className="mt-1 text-xs leading-relaxed text-zinc-400">{item.why}</p>
                 </li>
               ))}

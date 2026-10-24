@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { TextSizeControl } from "@/components/text-size-control";
 import { ShieldAlert, Database, Sparkles } from "lucide-react";
 
 export function SiteFooter() {
@@ -50,10 +51,18 @@ export function SiteFooter() {
         </div>
       </div>
 
+      {/* Accessible Display Settings & Copyright */}
       <div className="border-t border-white/[0.06]">
-        <div className="container-page flex flex-col justify-between gap-3 py-6 text-xs text-zinc-500 sm:flex-row">
-          <p>© 2026 Tablemate. Built for the Qloo Agentic Hackathon.</p>
-          <p className="font-mono">No accounts required · Transparent 3-tier evidence model</p>
+        <div className="container-page flex flex-col justify-between items-center gap-4 py-6 text-xs text-zinc-500 sm:flex-row">
+          <div>
+            <p>© 2026 Tablemate. Built for the Qloo Agentic Hackathon.</p>
+            <p className="font-mono mt-1 text-[11px] text-zinc-500">No accounts required · Transparent 3-tier evidence model</p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[11px] text-zinc-400">Text Display:</span>
+            <TextSizeControl />
+          </div>
         </div>
       </div>
     </footer>

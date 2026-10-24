@@ -121,7 +121,7 @@ export function PlanForm() {
             <div>
               <p className="eyebrow">Interactive Shortlist Builder</p>
               <h1 className="mt-2 font-display text-3xl sm:text-5xl font-bold tracking-tight text-zinc-100">
-                Who are we shortlisting for?
+                Who are we cooking for?
               </h1>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-zinc-300">
                 Input their cultural touchstones and physical dining constraints. Our agent queries Qloo&apos;s taste graph, evaluates kitchen texture and sodium realities, and prepares your 30-second verification phone script.
@@ -157,11 +157,11 @@ export function PlanForm() {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="container-page grid gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start"
+        className="container-page grid gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start w-full min-w-0 max-w-full"
       >
-        <div className="space-y-6">
+        <div className="space-y-6 min-w-0 max-w-full">
           {/* Step 01: Taste */}
-          <section className="liquid-glass liquid-glass-specular p-6 sm:p-8">
+          <section className="card-paper p-5 sm:p-8">
             <div className="flex items-start gap-4">
               <span
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10 font-mono text-sm font-bold text-amber-400"
@@ -171,10 +171,10 @@ export function PlanForm() {
               </span>
               <div>
                 <h2 className="font-display text-2xl font-bold tracking-tight text-zinc-100">
-                  Cultural Taste
+                  Taste
                 </h2>
                 <p className="mt-1 text-sm text-zinc-400">
-                  Music, film, cuisines, or restaurants they love.
+                  What do they love? Music, film, a cuisine, a place they return to.
                 </p>
               </div>
             </div>
@@ -184,7 +184,7 @@ export function PlanForm() {
           </section>
 
           {/* Step 02: Needs */}
-          <section className="liquid-glass liquid-glass-specular p-6 sm:p-8">
+          <section className="card-paper p-5 sm:p-8">
             <div className="flex items-start gap-4">
               <span
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10 font-mono text-sm font-bold text-amber-400"
@@ -194,10 +194,10 @@ export function PlanForm() {
               </span>
               <div>
                 <h2 className="font-display text-2xl font-bold tracking-tight text-zinc-100">
-                  Dining Accommodations
+                  Needs
                 </h2>
                 <p className="mt-1 text-sm text-zinc-400">
-                  Texture, sodium, diet, noise, and mobility access.
+                  Texture, sodium, diet, noise, and access. These are applied as evidence labels, not guesses dressed up as facts.
                 </p>
               </div>
             </div>
@@ -220,7 +220,7 @@ export function PlanForm() {
           </section>
 
           {/* Step 03: Location */}
-          <section className="liquid-glass liquid-glass-specular p-6 sm:p-8">
+          <section className="card-paper p-5 sm:p-8">
             <div className="flex items-start gap-4">
               <span
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10 font-mono text-sm font-bold text-amber-400"
@@ -230,16 +230,16 @@ export function PlanForm() {
               </span>
               <div>
                 <h2 className="font-display text-2xl font-bold tracking-tight text-zinc-100">
-                  Target Location
+                  Location
                 </h2>
                 <p className="mt-1 text-sm text-zinc-400">
-                  City or neighborhood for physical venue resolution.
+                  A city or neighborhood. This is a hard filter.
                 </p>
               </div>
             </div>
             <div className="mt-6">
               <label htmlFor="location" className="label-lg">
-                City or Neighborhood
+                City or neighborhood
               </label>
               <div className="relative mt-2">
                 <MapPin className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
@@ -249,27 +249,27 @@ export function PlanForm() {
                   value={location}
                   onChange={(event) => setLocation(event.target.value)}
                   className="field !pl-11"
-                  placeholder="e.g. Brooklyn, NY"
+                  placeholder="Brooklyn, NY"
                   autoComplete="address-level2"
                   aria-describedby="location-help"
                   required
                 />
               </div>
               <p id="location-help" className="helper">
-                Live Qloo queries support cities worldwide. Sample demo fixtures are calibrated for Brooklyn, Edison, and Chicago.
+                Sample mode covers Brooklyn, Edison, and Chicago. Add a Qloo key for live coverage anywhere Qloo has venues.
               </p>
             </div>
           </section>
         </div>
 
         {/* Sidebar Summary & Launch */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="liquid-glass liquid-glass-specular p-6">
-            <h2 className="font-display text-xl font-bold text-zinc-100">Profile Summary</h2>
+        <aside className="lg:sticky lg:top-24 lg:self-start min-w-0 max-w-full">
+          <div className="card-paper p-5 sm:p-6">
+            <h2 className="font-display text-xl font-bold text-zinc-100">Your shortlist</h2>
 
             <div className="mt-5 space-y-4">
               <div>
-                <p className="eyebrow">Taste Signals</p>
+                <p className="eyebrow">Taste</p>
                 {taste.length > 0 ? (
                   <ul className="mt-2 space-y-1.5">
                     {taste.map((seed) => (
@@ -285,12 +285,12 @@ export function PlanForm() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-1.5 text-xs text-zinc-500">None added yet.</p>
+                  <p className="mt-1.5 text-xs text-zinc-500">Add at least one.</p>
                 )}
               </div>
 
               <div className="border-t border-white/[0.06] pt-3">
-                <p className="eyebrow">Dining Needs</p>
+                <p className="eyebrow">Needs</p>
                 {summary.length > 0 ? (
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {summary.map((need) => (
@@ -300,20 +300,20 @@ export function PlanForm() {
                     ))}
                   </div>
                 ) : (
-                  <p className="mt-1.5 text-xs text-zinc-500">Standard settings.</p>
+                  <p className="mt-1.5 text-xs text-zinc-500">No extra needs selected.</p>
                 )}
               </div>
 
               <div className="border-t border-white/[0.06] pt-3">
-                <p className="eyebrow">Location</p>
+                <p className="eyebrow">Where</p>
                 <p className="mt-1 text-sm font-semibold text-zinc-200">
-                  {location.trim() || "Enter location above"}
+                  {location.trim() || "Add a location"}
                 </p>
               </div>
             </div>
 
             <button type="submit" disabled={!canSubmit} className="btn-primary mt-6 w-full !text-base">
-              Generate Shortlist
+              Find 5 places
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
             {!canSubmit && (

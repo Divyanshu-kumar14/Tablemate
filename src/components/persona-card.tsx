@@ -70,7 +70,7 @@ export function PersonaCard({ persona, index }: { persona: Persona; index: numbe
 
         <div className="mt-auto pt-6 flex items-center justify-between border-t border-white/[0.06]">
           <span className="inline-flex items-center gap-2 text-sm font-semibold text-amber-400 group-hover:text-amber-300">
-            Launch {persona.name}&apos;s shortlist
+            See {persona.name}&apos;s shortlist
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </span>
           <span className="font-mono text-[10px] text-zinc-500">1-Tap Live Agent</span>

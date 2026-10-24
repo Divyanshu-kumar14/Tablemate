@@ -82,7 +82,8 @@ export function ActionSearchBar({ className }: { className?: string }) {
               setQuery(e.target.value);
               setIsOpen(true);
             }}
-            placeholder="Search an artist, movie, or cuisine (e.g. Miles Davis, Casablanca)..."
+            aria-label="Search cultural tastes"
+            placeholder="Search artist, film, or cuisine..."
             className="w-full bg-transparent text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none"
           />
         </div>
@@ -106,7 +107,7 @@ export function ActionSearchBar({ className }: { className?: string }) {
             animate={{ opacity: 1, y: 4, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="liquid-glass absolute inset-x-0 top-full z-50 overflow-hidden rounded-xl border border-white/[0.12] bg-obsidian-900/95 p-2 shadow-2xl backdrop-blur-2xl"
+            className="liquid-glass absolute inset-x-0 top-full z-50 mt-1 max-h-[60vh] overflow-y-auto rounded-xl border border-white/[0.12] bg-obsidian-900/95 p-2 shadow-2xl backdrop-blur-2xl"
           >
             {results.length > 0 ? (
               <div className="space-y-1">

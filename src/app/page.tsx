@@ -73,7 +73,7 @@ export default function HomePage() {
           <div className="mt-12 sm:mt-16">
             <div className="mb-3 text-center">
               <span className="font-mono text-xs uppercase tracking-widest text-zinc-400">
-                Interactive Engine Architecture
+                Interactive Engine Architecture · Sample preview
               </span>
             </div>
             <TasteGraphBeam />

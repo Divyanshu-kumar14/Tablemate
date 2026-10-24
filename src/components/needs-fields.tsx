@@ -164,7 +164,7 @@ export function NeedsFields({
             value="lower"
             checked={sodium === "lower"}
             onSelect={onSodium}
-            label="Lower Sodium"
+            label="Lower sodium"
             description="Look for kitchens that can prepare dishes with less added salt."
           />
         </div>
@@ -236,7 +236,7 @@ export function NeedsFields({
           <CheckCard
             checked={mobility.includes("step-free")}
             onToggle={() => onMobility(toggle(mobility, "step-free"))}
-            label="Step-free Entrance"
+            label="Step-free entrance"
             description="No stairs or steps at the main entrance."
           />
           <CheckCard
