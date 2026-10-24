@@ -5,20 +5,26 @@ import { ArrowRight, Sparkles, MapPin, Heart } from "lucide-react";
 import { motion } from "motion/react";
 import type { Persona } from "@/data/personas";
 import { needsSummary } from "@/lib/labels";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 export function PersonaCard({ persona, index }: { persona: Persona; index: number }) {
   const needs = needsSummary(persona.needs);
 
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.01 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className="h-full"
+      whileHover={{ y: -5, scale: 1.015 }}
+      transition={{ type: "spring", stiffness: 350, damping: 25 }}
+      className="h-full relative"
     >
       <Link
         href={`/results?persona=${persona.id}`}
-        className="liquid-glass liquid-glass-specular group flex h-full flex-col p-6 sm:p-7 text-left transition-all duration-300 hover:border-amber-400/40 hover:shadow-glass-glow"
+        className="liquid-glass liquid-glass-specular group relative flex h-full flex-col p-6 sm:p-7 text-left transition-all duration-300 hover:border-amber-400/50 hover:shadow-glass-glow"
       >
+        {/* Subtle border beam highlight on top persona or hover */}
+        {index === 0 && (
+          <BorderBeam size={180} duration={12} delay={0} colorFrom="#fbbf24" colorTo="#d97706" />
+        )}
+
         <div className="flex items-center justify-between gap-4">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 px-2.5 py-1 font-mono text-[11px] font-semibold tracking-wider text-amber-400 uppercase">
             <MapPin className="h-3 w-3" /> {persona.location}
@@ -43,7 +49,7 @@ export function PersonaCard({ persona, index }: { persona: Persona; index: numbe
             {persona.taste.map((t) => (
               <span
                 key={t.name}
-                className="inline-flex items-center gap-1 rounded-md border border-white/[0.08] bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-zinc-300"
+                className="inline-flex items-center gap-1 rounded-md border border-white/[0.08] bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-zinc-300 group-hover:border-amber-500/20 transition-colors"
               >
                 <Sparkles className="h-2.5 w-2.5 text-amber-400" />
                 {t.name}

@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, Check, Sparkles, Shield, Compass, HeartHandshake } from "lucide-react";
+import { ArrowRight, Shield, Compass, HeartHandshake } from "lucide-react";
 import { PERSONAS } from "@/data/personas";
 import { PersonaCard } from "@/components/persona-card";
 import { Disclaimer } from "@/components/disclaimer";
-import { TasteGraphBeam } from "@/components/taste-graph-beam";
-import { ActionSearchBar } from "@/components/ui/action-search-bar";
+import { HeroSection } from "@/components/hero-section";
 import { EVIDENCE_COPY } from "@/lib/labels";
 
 const STEPS = [
@@ -28,58 +27,8 @@ const STEPS = [
 export default function HomePage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24">
-        {/* Ambient background glows */}
-        <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-[32rem] w-[54rem] rounded-full bg-gradient-to-b from-amber-500/10 via-amber-600/5 to-transparent blur-3xl" />
-
-        <div className="container-page relative z-10 text-center">
-          <div className="mx-auto max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-widest text-amber-300 backdrop-blur-md">
-              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-              <span>Cultural Intelligence Meets Senior Care</span>
-            </div>
-
-            <h1 className="mt-6 font-display text-[clamp(2.75rem,7vw,5rem)] font-bold leading-[1.02] tracking-tight text-zinc-100">
-              Good taste <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent">doesn&apos;t</span> retire.
-            </h1>
-
-            <p className="mt-6 text-lg sm:text-xl leading-relaxed text-zinc-300">
-              A restaurant shortlist for an aging parent, shaped by the music and films they love, calibrated for texture, sodium, and mobility, and verified with a 30-second call script.
-            </p>
-
-            {/* KokonutUI Floating Action Search Bar */}
-            <div className="mt-8">
-              <ActionSearchBar />
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-              <Link href="/plan" className="btn-primary">
-                Build a Shortlist
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link href="#personas" className="btn-secondary">
-                Explore Demo Personas
-              </Link>
-            </div>
-
-            <div className="mt-5 flex items-center justify-center gap-2 text-xs text-zinc-400 font-mono">
-              <Check className="h-3.5 w-3.5 text-emerald-400" />
-              <span>No signup required · 1-tap live agent · Zero hallucinated health claims</span>
-            </div>
-          </div>
-
-          {/* Interactive Magic UI Animated Taste Graph Beam */}
-          <div className="mt-12 sm:mt-16">
-            <div className="mb-3 text-center">
-              <span className="font-mono text-xs uppercase tracking-widest text-zinc-400">
-                Interactive Engine Architecture · Sample preview
-              </span>
-            </div>
-            <TasteGraphBeam />
-          </div>
-        </div>
-      </section>
+      {/* Animated Hero Section with Interactive Welcome Beacon & Spotlight */}
+      <HeroSection />
 
       {/* Demo Personas Section */}
       <section id="personas" className="scroll-mt-24 border-y border-white/[0.08] bg-obsidian-900/60 py-16 sm:py-24">

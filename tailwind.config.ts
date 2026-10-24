@@ -52,10 +52,16 @@ const config: Config = {
           "0%": { strokeDashoffset: "100" },
           "100%": { strokeDashoffset: "0" },
         },
+        "border-beam": {
+          "100%": {
+            offsetDistance: "100%",
+          },
+        },
       },
       animation: {
         "pulse-slow": "pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         shimmer: "shimmer 8s linear infinite",
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
       },
     },
   },
