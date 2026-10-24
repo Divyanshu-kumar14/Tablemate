@@ -127,18 +127,43 @@ function buildGeminiBody(system: string, userPayload: unknown, maxTokens: number
     generationConfig: {
       temperature: 0.2,
       maxOutputTokens: maxTokens,
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: "OBJECT",
+        properties: {
+          picks: {
+            type: "ARRAY",
+            items: {
+              type: "OBJECT",
+              properties: {
+                id: { type: "STRING" },
+                taste_reason: { type: "STRING" },
+              },
+              required: ["id", "taste_reason"],
+            },
+          },
+        },
+        required: ["picks"],
+      },
     },
   };
 }
 
-export async function explainWithLlm(input: {
+export interface LlmDetailedResult {
+  result: LlmResult | null;
+  reason: string;
+}
+
+export async function explainWithLlmDetailed(input: {
   seeds: TasteSeed[];
   candidates: RankedCandidate[];
   location: string;
   note?: string;
   signal?: AbortSignal;
-}): Promise<LlmResult | null> {
-  if (!isLlmEnabled || !env.GEMINI_API_KEY) return null;
+}): Promise<LlmDetailedResult> {
+  const fail = (reason: string): LlmDetailedResult => ({ result: null, reason });
+
+  if (!isLlmEnabled || !env.GEMINI_API_KEY) return fail("disabled");
 
   const candidates = input.candidates.slice(0, 8).map((entry) => ({
     id: entry.candidate.id,
@@ -184,25 +209,44 @@ export async function explainWithLlm(input: {
 
     if (!response.ok) {
       console.warn(`[llm] Gemini request failed with HTTP ${response.status}`);
-      return null;
+      return fail(`http_${response.status}`);
     }
 
     const payload: unknown = await response.json().catch(() => null);
-    const extracted = readGeminiText(payload);
-    if (!extracted) return null;
+    const data = payload as { promptFeedback?: { blockReason?: string }; candidates?: Array<{ finishReason?: string; content?: { parts?: Array<{ text?: string; thought?: boolean }> } }>; usageMetadata?: { totalTokenCount?: number; promptTokenCount?: number; candidatesTokenCount?: number } } | null;
+    if (data?.promptFeedback?.blockReason) return fail(`blocked:${data.promptFeedback.blockReason}`);
+    const candidate = data?.candidates?.[0];
+    if (!candidate) return fail("no_candidate");
+    if (candidate.finishReason && candidate.finishReason !== "STOP") return fail(`finish:${candidate.finishReason}`);
+    const text = (candidate.content?.parts ?? []).filter((p) => p.thought !== true).map((p) => (typeof p.text === "string" ? p.text.trim() : "")).filter(Boolean).join("").trim();
+    if (!text) return fail("empty_text");
+    const usage = data.usageMetadata;
+    const total = usage?.totalTokenCount ?? ((usage?.promptTokenCount ?? 0) + (usage?.candidatesTokenCount ?? 0));
+    const extracted = { text, tokens: Number.isFinite(total) && total > 0 ? Math.round(total) : 0 };
 
     const picks = parseLlmPicks(extracted.text);
-    if (!picks) return null;
+    if (!picks) return fail("parse_failed");
 
     const allowed = new Set(input.candidates.map((entry) => entry.candidate.id));
     const valid = picks.filter((pick) => allowed.has(pick.id));
-    if (valid.length < 3) return null;
+    if (valid.length < 3) return fail("too_few_valid");
 
-    return { picks: valid, tokens: extracted.tokens };
+    return { result: { picks: valid, tokens: extracted.tokens }, reason: "ok" };
   } catch (error) {
     if (error instanceof Error && error.name !== "AbortError" && error.name !== "TimeoutError") {
       console.warn(`[llm] Gemini request failed: ${error.message}`);
     }
-    return null;
+    return fail(error instanceof Error ? error.name : "exception");
   }
+}
+
+export async function explainWithLlm(input: {
+  seeds: TasteSeed[];
+  candidates: RankedCandidate[];
+  location: string;
+  note?: string;
+  signal?: AbortSignal;
+}): Promise<LlmResult | null> {
+  const detailed = await explainWithLlmDetailed(input);
+  return detailed.result;
 }

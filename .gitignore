@@ -43,6 +43,7 @@ playwright/.cache/
 # ── Local-only project docs & tooling ────────────────────────
 # Internal planning docs and agent caches must not ship in the
 # public hackathon repo.
+.orchestrator/
 .token-optimizer/
 .artifacts/
 docs/

@@ -5,7 +5,7 @@ import { env, isLlmEnabled, isMockMode } from "@/lib/env";
 import { canSpendTokens, recordTokenUsage } from "@/lib/limits";
 import { applySeniorFit, type RankedCandidate } from "@/lib/fit/apply-senior-fit";
 import { resolveSeeds, getPlaceCandidates } from "@/lib/agent/tools";
-import { explainWithLlm } from "@/lib/agent/llm";
+import { explainWithLlm, explainWithLlmDetailed } from "@/lib/agent/llm";
 import { toCard, toWireCard, templateTasteReason } from "@/lib/cards";
 import { fallbackPlacesForLocation, withMockSignals } from "@/data/mock-places";
 
@@ -189,26 +189,26 @@ export async function runAgent(
         },
       });
     } else {
-      const llm = await step(
+      const detailed = await step(
         emit,
         "explain",
         "Writing plain-language taste reasons",
         () =>
-          explainWithLlm({
+          explainWithLlmDetailed({
             seeds: resolved.entities,
             candidates: ranked,
             location: input.location,
             note: input.needs.note,
             signal: options.signal,
           }),
-        (result) => (result ? `Explained ${result.picks.length} picks` : "Template fallback"),
+        (result) => (result.result ? `Explained ${result.result.picks.length} picks` : `Template fallback (${result.reason})`),
       );
-      if (llm) {
-        picks = llm.picks;
+      if (detailed.result) {
+        picks = detailed.result.picks;
         llmUsed = true;
-        await recordTokenUsage(llm.tokens).catch(() => undefined);
+        await recordTokenUsage(detailed.result.tokens).catch(() => undefined);
       } else {
-        degraded.add("llm");
+        degraded.add(`llm:${detailed.reason}`);
       }
     }
   }

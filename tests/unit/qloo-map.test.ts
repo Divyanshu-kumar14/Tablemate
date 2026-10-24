@@ -131,6 +131,15 @@ describe("cuisine inference", () => {
     ).toBe("Middle Eastern");
   });
 
+  it("ignores decor and interests tags when inferring cuisine", () => {
+    expect(
+      inferCuisine("Historic Hall", [
+        { id: "urn:tag:decor:qloo:american_primitive", name: "American primitive", type: "urn:tag:decor:qloo" },
+        { id: "urn:tag:interests:qloo:american_history", name: "American history", type: "urn:tag:interests:qloo" },
+      ]),
+    ).toBe("Restaurant");
+  });
+
   it("uses common name patterns", () => {
     expect(inferCuisine("Sakura Sushi", [])).toBe("Japanese");
     expect(inferCuisine("Osteria Lago", [])).toBe("Italian");
@@ -232,6 +241,29 @@ describe("mapRawEntity", () => {
       affinity: null,
       popularity: 0,
     });
+  });
+
+  it("filters out non-dining places like churches, graveyards, and tourist monuments", () => {
+    const church = mapRawEntity({
+      entity_id: "urn:entity:place:church-1",
+      name: "St. Paul's Chapel",
+      tags: [
+        { id: "urn:tag:category:place:episcopal_church", name: "Episcopal church", type: "urn:tag:category:place" },
+        { id: "urn:tag:amenity:qloo:graveyard", name: "Graveyard", type: "urn:tag:amenity:qloo" },
+        { id: "urn:tag:activity_type:qloo:religious_spiritual", name: "Religious spiritual", type: "urn:tag:activity_type:qloo" },
+      ],
+    });
+    expect(church).toBeNull();
+
+    const monument = mapRawEntity({
+      entity_id: "urn:entity:place:monument-1",
+      name: "City Memorial Monument",
+      tags: [
+        { id: "urn:tag:category:place:tourist_attraction", name: "Tourist attraction", type: "urn:tag:category:place" },
+        { id: "urn:tag:activity_type:qloo:sightseeing", name: "Sightseeing", type: "urn:tag:activity_type:qloo" },
+      ],
+    });
+    expect(monument).toBeNull();
   });
 });
 

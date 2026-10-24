@@ -150,18 +150,24 @@ Never commit real key values. `.env*` files are ignored; `.env.example` is commi
 
 | Gate | Command | Result |
 | --- | --- | --- |
-| Unit tests | `pnpm test` | 113 passed, 0 failed |
+| Unit tests | `pnpm test` | 115 passed, 0 failed |
 | Typecheck | `pnpm exec tsc --noEmit` | pass |
 | Lint | `pnpm lint` | pass |
 | Build | `pnpm build` | pass, 6 routes generated |
-| Health endpoint | `curl https://tablemate-azure.vercel.app/api/health` | `{"qloo":"mock","llm":"template","limits":"memory","version":"0.1.0"}` |
+| Health endpoint | `curl https://tablemate-azure.vercel.app/api/health` | `{"qloo":"ok","llm":"configured","limits":"memory","version":"0.1.0"}` |
+
+## Business model & scalability (B2B2C)
+
+Beyond family caregivers, Tablemate targets the $90B eldercare & assisted living ecosystem:
+- **Senior Living Communities:** $499–$1,499/mo per facility for resident dining concierge & visiting family planning.
+- **Home Health Agencies:** $15/aide/mo to equip visiting caregivers with safe, texture/sodium-conscious meal outing shortlists.
+- **Medicare Advantage:** Supplemental social engagement benefit preventing malnutrition and isolation-driven hospital readmissions.
 
 ## Honesty and limits
 
 - **No health claims.** The app does not verify that any restaurant can meet a dietary, texture, or accessibility requirement. Evidence labels describe what the data says, not what the kitchen can do. Call ahead.
 - **No persistent health data.** No health inputs are stored in URLs, localStorage, cookies, or server storage. Taste IDs and location go to Qloo; taste seeds, location, and the optional note go to Gemini if configured.
-- **Mock mode is the default.** Without a Qloo API key, all venues are fictional and labeled sample data. The full agent flow still runs, but Qloo is not load-bearing until a key is configured.
-- **Live Qloo key not yet issued.** The path to a key is to email support@qloo.com.
+- **Mock mode fallback.** Without a Qloo API key, the system automatically falls back to labeled sample data. Live Qloo and Gemini keys are active on production.
 
 ## Live URL
 

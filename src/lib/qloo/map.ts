@@ -19,6 +19,110 @@ const CUISINE_MATCHERS: Array<{ slug: string; display: string; aliases: string[]
   { slug: "american", display: "American", aliases: ["american", "diner", "grill", "kitchen"] },
 ];
 
+const NON_DINING_TAG_PATTERNS = [
+  /\bchurch\b/i,
+  /\bchapel\b/i,
+  /\bepiscopal_church\b/i,
+  /\bcatholic_church\b/i,
+  /\bplace_of_worship\b/i,
+  /\bsynagogue\b/i,
+  /\bmosque\b/i,
+  /\btemple\b/i,
+  /\breligious_spiritual\b/i,
+  /\bgraveyard\b/i,
+  /\bcemetery\b/i,
+  /\bmemorials?\b/i,
+  /\bcrematorium\b/i,
+  /\bfuneral\b/i,
+  /\belementary_school\b/i,
+  /\bhigh_school\b/i,
+  /\bpolice_station\b/i,
+  /\bgas_station\b/i,
+  /\bparking_garage\b/i,
+  /\btransit_station\b/i,
+  /\bsubway_station\b/i,
+  /\bcourthouse\b/i,
+];
+
+const NON_DINING_NAME_PATTERNS = [
+  /\bchapel\b/i,
+  /\bchurch\b/i,
+  /\bcemetery\b/i,
+  /\bgraveyard\b/i,
+  /\bcathedral\b/i,
+  /\bsynagogue\b/i,
+  /\bmosque\b/i,
+  /\btemple\b/i,
+  /\bmemorial\b/i,
+  /\bmortuary\b/i,
+  /\bcrematorium\b/i,
+  /\bmausoleum\b/i,
+];
+
+const DINING_TAG_PATTERNS = [
+  /restaurant/i,
+  /dining/i,
+  /cuisine/i,
+  /food/i,
+  /cafe|café/i,
+  /bistro/i,
+  /bakery/i,
+  /bar/i,
+  /pub/i,
+  /tavern/i,
+  /brasserie/i,
+  /eatery/i,
+  /deli/i,
+  /pizzeria/i,
+  /steakhouse/i,
+  /trattoria/i,
+  /osteria/i,
+  /grill/i,
+  /diner/i,
+  /sushi/i,
+  /ramen/i,
+  /noodle/i,
+  /bbq/i,
+  /brewery/i,
+  /winery/i,
+];
+
+const CIVIC_OR_ATTRACTION_TAG_PATTERNS = [
+  /tourist_attraction/i,
+  /sightseeing/i,
+  /museum/i,
+  /monument/i,
+  /art_gallery/i,
+  /park/i,
+  /historical_preservation/i,
+];
+
+export function isDiningVenue(name: string, tags: TagRef[]): boolean {
+  for (const pattern of NON_DINING_NAME_PATTERNS) {
+    if (pattern.test(name)) return false;
+  }
+
+  for (const tag of tags) {
+    const tagText = `${tag.id} ${tag.name}`;
+    for (const pattern of NON_DINING_TAG_PATTERNS) {
+      if (pattern.test(tagText)) return false;
+    }
+  }
+
+  const hasAttractionTag = tags.some((tag) =>
+    CIVIC_OR_ATTRACTION_TAG_PATTERNS.some((pattern) => pattern.test(`${tag.id} ${tag.name}`)),
+  );
+  if (hasAttractionTag) {
+    const hasDiningTag = tags.some((tag) =>
+      DINING_TAG_PATTERNS.some((pattern) => pattern.test(`${tag.id} ${tag.name}`)),
+    );
+    const hasDiningName = DINING_TAG_PATTERNS.some((pattern) => pattern.test(name));
+    if (!hasDiningTag && !hasDiningName) return false;
+  }
+
+  return true;
+}
+
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, unknown>)
@@ -121,10 +225,40 @@ export function readImageUrl(properties: Record<string, unknown>): string | null
 }
 
 export function inferCuisine(name: string, tags: TagRef[]): string {
-  const haystack = [name, ...tags.map((tag) => `${tag.name} ${tag.id}`)].join(" ").toLowerCase();
+  // Filter out decor, architectural, and unrelated tags so "American primitive decor"
+  // doesn't falsely classify a venue as an American restaurant.
+  const cuisineRelevantTags = tags.filter((tag) => {
+    const combined = `${tag.type} ${tag.id}`.toLowerCase();
+    return !(
+      combined.includes(":decor:") ||
+      combined.includes(":setting:") ||
+      combined.includes(":interests:") ||
+      combined.includes(":nearby_attraction:") ||
+      combined.includes(":amenities:") ||
+      combined.includes(":parking:") ||
+      combined.includes(":payment")
+    );
+  });
+
+  const tagHaystack = cuisineRelevantTags
+    .map((tag) => `${tag.name} ${tag.id}`)
+    .join(" ")
+    .toLowerCase();
+
   for (const cuisine of CUISINE_MATCHERS) {
-    if (cuisine.aliases.some((alias) => haystack.includes(alias))) return cuisine.display;
+    for (const alias of cuisine.aliases) {
+      const aliasRegex = new RegExp(`\\b${alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      if (aliasRegex.test(tagHaystack)) return cuisine.display;
+    }
   }
+
+  for (const cuisine of CUISINE_MATCHERS) {
+    for (const alias of cuisine.aliases) {
+      const aliasRegex = new RegExp(`\\b${alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      if (aliasRegex.test(name)) return cuisine.display;
+    }
+  }
+
   return "Restaurant";
 }
 
@@ -225,6 +359,9 @@ export function mapRawEntity(raw: RawEntity, seeds: TasteSeed[] = []): PlaceCand
   const tags = (raw.tags ?? [])
     .map(mapRawTag)
     .filter((tag): tag is TagRef => Boolean(tag));
+
+  if (!isDiningVenue(name, tags)) return null;
+
   const popularity = asNumber(raw.popularity) ?? 0;
   const explainability = raw.query?.explainability ?? null;
 

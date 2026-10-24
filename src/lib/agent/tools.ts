@@ -106,7 +106,7 @@ export async function getPlaceCandidates(input: {
       entityIds: input.seeds.map((seed) => seed.qlooId),
       tagIds: input.tagIds,
       location: input.location,
-      limit: Math.max(input.limit * 3, 12),
+      limit: Math.max(input.limit * 5, 25),
     });
     const candidates = extractInsightEntities(payload)
       .map((entity) => mapRawEntity(entity, input.seeds))
